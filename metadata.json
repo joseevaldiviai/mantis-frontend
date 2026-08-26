@@ -1,0 +1,6 @@
+{
+  "name": "Mantis CMMS",
+  "description": "Frontend en React para la gestión integral de inventario, equipos y mantenimiento CMMS estilo MaintainX con paleta Menta, Blanco y Beige",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
