@@ -14,6 +14,7 @@ import { UsersCompaniesView } from './components/UsersCompaniesView';
 import { RagView } from './components/RagView';
 import { RagChatPanel } from './components/RagChatPanel';
 import { QrScannerView } from './components/QrScannerView';
+import { WorkOrderFullView } from './components/WorkOrderFullView';
 import { LoginScreen } from './components/LoginScreen';
 import { api } from './services/api';
 import { User, Company, NotificationItem } from './types';
@@ -37,6 +38,9 @@ export default function App() {
   const [isCreateOtOpen, setIsCreateOtOpen] = useState(false);
   const [isCreateSparePartOpen, setIsCreateSparePartOpen] = useState(false);
 
+  // Full OT view state
+  const [viewingFullOtId, setViewingFullOtId] = useState<number | null>(null);
+
   // Current session user & company
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [currentCompany, setCurrentCompany] = useState<Company | null>(null);
@@ -46,6 +50,19 @@ export default function App() {
 
   // Refresh trigger counter
   const [refreshKey, setRefreshKey] = useState(0);
+
+  // Notifications polling
+  useEffect(() => {
+    if (!api.isAuthenticated()) return;
+    const fetchUnreadCount = () => {
+      api.getUnreadNotificationCount()
+        .then(count => setUnreadNotifications(count))
+        .catch(() => {});
+    };
+    fetchUnreadCount();
+    const interval = setInterval(fetchUnreadCount, 30000);
+    return () => clearInterval(interval);
+  }, [refreshKey]);
 
   useEffect(() => {
     if (api.isAuthenticated()) {
@@ -178,12 +195,20 @@ export default function App() {
             />
           )}
 
-          {activeTab === 'ordenes' && (
+          {activeTab === 'ordenes' && !viewingFullOtId && (
             <WorkOrdersView
               key={`ot-${refreshKey}`}
               isCreateModalOpen={isCreateOtOpen}
               onOpenCreateModal={() => setIsCreateOtOpen(true)}
               onCloseCreateModal={() => setIsCreateOtOpen(false)}
+              onViewFull={(otId) => setViewingFullOtId(otId)}
+            />
+          )}
+
+          {activeTab === 'ordenes' && viewingFullOtId && (
+            <WorkOrderFullView
+              workOrderId={viewingFullOtId}
+              onBack={() => setViewingFullOtId(null)}
             />
           )}
 
@@ -236,7 +261,7 @@ export default function App() {
           {currentUser?.rol !== 'tecnico' && (
             <button
               onClick={() => setIsApiConfigOpen(true)}
-              className="text-slate-600 hover:text-slate-900 underline font-medium cursor-pointer text-[11px]"
+              className="text-slate-600 hover:text-slate-900 underline font-medium cursor-pointer text-[12px]"
             >
               Configurar Conexión Laravel Sanctum
             </button>
@@ -267,6 +292,15 @@ export default function App() {
           api.markAllNotificationsAsRead().catch(() => {});
           setNotificationsList(prev => prev.map(n => ({ ...n, leida: true })));
           setUnreadNotifications(0);
+        }}
+        onMarkAsRead={(id) => {
+          api.markNotificationAsRead(id).catch(() => {});
+          setNotificationsList(prev => prev.map(n => n.id === id ? { ...n, leida: true } : n));
+          setUnreadNotifications(prev => Math.max(0, prev - 1));
+        }}
+        onDelete={(id) => {
+          api.deleteNotification(id).catch(() => {});
+          setNotificationsList(prev => prev.filter(n => n.id !== id));
         }}
       />
 

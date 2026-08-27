@@ -76,7 +76,7 @@ export const ApiConfigModal: React.FC<ApiConfigModalProps> = ({ isOpen, onClose 
               placeholder="http://localhost:8080/api"
               className="w-full px-3 py-2 text-sm glass-input rounded-xl focus:outline-none font-mono"
             />
-            <p className="text-[11px] text-slate-400 mt-1">Por defecto: <code className="text-[#0F434A]">http://localhost:8080/api</code></p>
+            <p className="text-[12px] text-slate-400 mt-1">Por defecto: <code className="text-[#0F434A]">http://localhost:8080/api</code></p>
           </div>
 
           {/* Token Sanctum */}

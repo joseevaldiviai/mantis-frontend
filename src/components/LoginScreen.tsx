@@ -81,7 +81,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
               />
               <div>
                 <span className="text-xl font-black tracking-tight text-white block leading-tight">MANTIS</span>
-                <span className="text-[10px] tracking-widest text-[#3D848C] font-bold uppercase block">Intelligence System · CMMS</span>
+                <span className="text-[11px] tracking-widest text-[#3D848C] font-bold uppercase block">Intelligence System · CMMS</span>
               </div>
             </div>
 
@@ -115,9 +115,9 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
           </div>
 
           {/* Bottom Info / Version */}
-          <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400">
+          <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-[12px] text-slate-400">
             <span>Versión 2.5 CMMS</span>
-            <span className="px-2 py-0.5 rounded-full bg-white/10 text-slate-300 font-mono text-[10px]">
+            <span className="px-2 py-0.5 rounded-full bg-white/10 text-slate-300 font-mono text-[11px]">
               API Live Laravel
             </span>
           </div>

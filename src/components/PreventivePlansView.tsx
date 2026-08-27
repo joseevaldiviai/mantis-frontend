@@ -121,10 +121,10 @@ export const PreventivePlansView: React.FC = () => {
           {plans.map(p => (
             <div key={p.id} className="glass-card p-5 rounded-2xl space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold px-2 py-0.5 bg-[#D9EDEE] text-[#0F434A] rounded-lg border border-[#3D848C]/50">
+                <span className="text-[11px] font-bold px-2 py-0.5 bg-[#D9EDEE] text-[#0F434A] rounded-lg border border-[#3D848C]/50">
                   {p.maquina.nombre}
                 </span>
-                <span className="text-[10px] font-bold px-2 py-0.5 bg-white/60 text-slate-700 rounded-lg border border-white/80">
+                <span className="text-[11px] font-bold px-2 py-0.5 bg-white/60 text-slate-700 rounded-lg border border-white/80">
                   {p.tipo_disparador === 'calendario' ? `Cada ${p.frecuencia_dias} Días` : `Cada ${p.intervalo_contador} ${p.meter_type}`}
                 </span>
               </div>

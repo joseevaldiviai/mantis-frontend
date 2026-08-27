@@ -261,15 +261,15 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
                     <h2 className="text-lg font-extrabold text-slate-800">{qrData.maquina.nombre}</h2>
-                    <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-lg bg-[#D9EDEE] text-[#0F434A] border border-[#3D848C]/50">
+                    <span className="font-mono text-[11px] font-bold px-2 py-0.5 rounded-lg bg-[#D9EDEE] text-[#0F434A] border border-[#3D848C]/50">
                       {qrData.maquina.codigo}
                     </span>
                     {qrData.maquina.activo ? (
-                      <span className="flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                      <span className="flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                         <CheckCircle2 className="w-3 h-3" /> Activo
                       </span>
                     ) : (
-                      <span className="flex items-center gap-1 text-[10px] font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">
+                      <span className="flex items-center gap-1 text-[11px] font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">
                         <XCircle className="w-3 h-3" /> Inactivo
                       </span>
                     )}
@@ -298,15 +298,15 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
             {/* Quick Stats */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5 pt-4 border-t border-white/60">
               <div className="p-3 bg-white/40 rounded-xl border border-white/60">
-                <p className="text-[10px] text-slate-500 font-bold uppercase">Total Mantenimientos</p>
+                <p className="text-[11px] text-slate-500 font-bold uppercase">Total Mantenimientos</p>
                 <p className="text-xl font-black text-slate-800 mt-0.5">{qrData.total_mantenimientos}</p>
               </div>
               <div className="p-3 bg-white/40 rounded-xl border border-white/60">
-                <p className="text-[10px] text-slate-500 font-bold uppercase">Historial OTs</p>
+                <p className="text-[11px] text-slate-500 font-bold uppercase">Historial OTs</p>
                 <p className="text-xl font-black text-slate-800 mt-0.5">{qrData.historial.length}</p>
               </div>
               <div className="p-3 bg-white/40 rounded-xl border border-white/60">
-                <p className="text-[10px] text-slate-500 font-bold uppercase">Próximo Mant.</p>
+                <p className="text-[11px] text-slate-500 font-bold uppercase">Próximo Mant.</p>
                 <p className="text-sm font-bold text-slate-800 mt-0.5">
                   {qrData.proximo_mantenimiento
                     ? new Date(qrData.proximo_mantenimiento).toLocaleDateString('es-ES')
@@ -314,7 +314,7 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
                 </p>
               </div>
               <div className="p-3 bg-white/40 rounded-xl border border-white/60">
-                <p className="text-[10px] text-slate-500 font-bold uppercase">Documentos</p>
+                <p className="text-[11px] text-slate-500 font-bold uppercase">Documentos</p>
                 <p className="text-xl font-black text-slate-800 mt-0.5">
                   {qrData.manuales.length + qrData.tutoriales.length + qrData.otros_documentos.length}
                 </p>
@@ -360,16 +360,16 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
                       <div className="min-w-0">
                         <div className="flex items-center gap-2">
                           <span className="text-xs font-bold text-slate-800">{ot.numero}</span>
-                          <span className="text-[10px] font-bold px-2 py-0.5 bg-white/60 text-slate-700 rounded-full border border-white/80">
+                          <span className="text-[11px] font-bold px-2 py-0.5 bg-white/60 text-slate-700 rounded-full border border-white/80">
                             {ot.estado?.nombre || 'N/A'}
                           </span>
                         </div>
-                        <p className="text-[11px] text-slate-500 truncate mt-0.5">{ot.descripcion_problema_inicial}</p>
+                        <p className="text-[12px] text-slate-500 truncate mt-0.5">{ot.descripcion_problema_inicial}</p>
                       </div>
                     </div>
                     <div className="text-right shrink-0 ml-3">
                       <p className="text-xs font-extrabold text-[#0F434A]">${ot.costo_total}</p>
-                      <p className="text-[10px] text-slate-400">{new Date(ot.created_at).toLocaleDateString('es-ES')}</p>
+                      <p className="text-[11px] text-slate-400">{new Date(ot.created_at).toLocaleDateString('es-ES')}</p>
                     </div>
                   </div>
                 ))}
@@ -388,7 +388,7 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
                 {/* Manuales */}
                 {qrData.manuales.length > 0 && (
                   <div className="space-y-2">
-                    <p className="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1">
+                    <p className="text-[11px] font-bold text-slate-500 uppercase flex items-center gap-1">
                       <BookOpen className="w-3 h-3" /> Manuales ({qrData.manuales.length})
                     </p>
                     {qrData.manuales.map((doc) => (
@@ -410,7 +410,7 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
                 {/* Tutoriales */}
                 {qrData.tutoriales.length > 0 && (
                   <div className="space-y-2">
-                    <p className="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1">
+                    <p className="text-[11px] font-bold text-slate-500 uppercase flex items-center gap-1">
                       <GraduationCap className="w-3 h-3" /> Tutoriales ({qrData.tutoriales.length})
                     </p>
                     {qrData.tutoriales.map((doc) => (
@@ -432,7 +432,7 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
                 {/* Otros documentos */}
                 {qrData.otros_documentos.length > 0 && (
                   <div className="space-y-2">
-                    <p className="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1">
+                    <p className="text-[11px] font-bold text-slate-500 uppercase flex items-center gap-1">
                       <FileText className="w-3 h-3" /> Otros ({qrData.otros_documentos.length})
                     </p>
                     {qrData.otros_documentos.map((doc) => (

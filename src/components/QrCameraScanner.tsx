@@ -159,7 +159,7 @@ export const QrCameraScanner: React.FC<QrCameraScannerProps> = ({ onScan, isOpen
             </div>
             <div>
               <h3 className="font-extrabold text-base text-slate-800">Escanear QR</h3>
-              <p className="text-[10px] text-slate-500">Apunta la cámara al código QR de la máquina</p>
+              <p className="text-[11px] text-slate-500">Apunta la cámara al código QR de la máquina</p>
             </div>
           </div>
           <button
@@ -205,7 +205,7 @@ export const QrCameraScanner: React.FC<QrCameraScannerProps> = ({ onScan, isOpen
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/95 via-slate-900/80 to-transparent p-4 pt-8 pointer-events-auto">
                 <div className="flex items-center gap-2 mb-2">
                   <Zap className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                  <span className="text-[10px] font-bold text-emerald-400 uppercase">
+                  <span className="text-[11px] font-bold text-emerald-400 uppercase">
                     Detectado ({scanCount})
                   </span>
                 </div>
@@ -240,7 +240,7 @@ export const QrCameraScanner: React.FC<QrCameraScannerProps> = ({ onScan, isOpen
           <div className="flex items-center justify-between px-1">
             <div className="flex items-center gap-2">
               <ScanLine className="w-3.5 h-3.5 text-slate-500" />
-              <span className="text-[11px] font-semibold text-slate-600">Modo Continuo</span>
+              <span className="text-[12px] font-semibold text-slate-600">Modo Continuo</span>
             </div>
             <button
               onClick={() => {
@@ -259,7 +259,7 @@ export const QrCameraScanner: React.FC<QrCameraScannerProps> = ({ onScan, isOpen
               />
             </button>
           </div>
-          <p className="text-[10px] text-slate-400 -mt-1 px-1">
+          <p className="text-[11px] text-slate-400 -mt-1 px-1">
             {continuousMode
               ? 'La cámara se mantiene abierta. Escanea varios códigos y confirma cuál usar.'
               : 'Se cierra automáticamente al detectar un código.'}
@@ -294,7 +294,7 @@ export const QrCameraScanner: React.FC<QrCameraScannerProps> = ({ onScan, isOpen
 
           {/* Permission hint */}
           {hasPermission === false && (
-            <div className="p-2 bg-amber-50 border border-amber-200 rounded-xl text-[11px] text-amber-700 text-center">
+            <div className="p-2 bg-amber-50 border border-amber-200 rounded-xl text-[12px] text-amber-700 text-center">
               Ve a <strong>Configuración → Privacidad → Cámara</strong> y habilita el acceso para este sitio.
             </div>
           )}

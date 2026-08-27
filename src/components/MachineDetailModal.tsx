@@ -127,7 +127,7 @@ export const MachineDetailModal: React.FC<MachineDetailModalProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <span className="font-extrabold text-lg text-slate-800">{machine.nombre}</span>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-[#D9EDEE] text-[#0F434A] font-mono border border-[#3D848C]/50">
+              <span className="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-[#D9EDEE] text-[#0F434A] font-mono border border-[#3D848C]/50">
                 {machine.codigo}
               </span>
             </div>
@@ -192,7 +192,7 @@ export const MachineDetailModal: React.FC<MachineDetailModalProps> = ({
                 <div className="bg-white/80 backdrop-blur-sm p-3 rounded-2xl border border-white inline-block shadow-xs">
                   <img src={qrImageUrl} alt="Machine QR" className="w-36 h-36 mx-auto rounded-lg" />
                 </div>
-                <p className="font-mono text-[11px] text-[#0F434A] font-bold break-all">{qrToken}</p>
+                <p className="font-mono text-[12px] text-[#0F434A] font-bold break-all">{qrToken}</p>
 
                 <div className="flex items-center justify-center gap-2 pt-2">
                   <button
@@ -291,32 +291,32 @@ export const MachineDetailModal: React.FC<MachineDetailModalProps> = ({
           {activeTab === 'kpis' && kpis && (
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
               <div className="p-3 bg-[#D9EDEE]/80 rounded-2xl border border-[#3D848C]/60">
-                <p className="text-[10px] text-[#0F434A] font-bold uppercase">MTTR (Minutos)</p>
+                <p className="text-[11px] text-[#0F434A] font-bold uppercase">MTTR (Minutos)</p>
                 <p className="text-xl font-black text-slate-800 mt-1">{kpis.ordenes_trabajo.mttr_minutos} min</p>
               </div>
 
               <div className="p-3 bg-[#D9EDEE]/80 rounded-2xl border border-[#3D848C]/60">
-                <p className="text-[10px] text-[#0F434A] font-bold uppercase">MTBF (Horas entre Fallas)</p>
+                <p className="text-[11px] text-[#0F434A] font-bold uppercase">MTBF (Horas entre Fallas)</p>
                 <p className="text-xl font-black text-slate-800 mt-1">{kpis.ordenes_trabajo.mtbf_horas} hrs</p>
               </div>
 
               <div className="p-3 bg-white/40 rounded-2xl border border-white/60">
-                <p className="text-[10px] text-slate-500 font-bold uppercase">Total OTs Ejecutadas</p>
+                <p className="text-[11px] text-slate-500 font-bold uppercase">Total OTs Ejecutadas</p>
                 <p className="text-xl font-black text-slate-800 mt-1">{kpis.ordenes_trabajo.total}</p>
               </div>
 
               <div className="p-3 bg-white/40 rounded-2xl border border-white/60">
-                <p className="text-[10px] text-slate-500 font-bold uppercase">Costo Mano de Obra</p>
+                <p className="text-[11px] text-slate-500 font-bold uppercase">Costo Mano de Obra</p>
                 <p className="text-xl font-black text-[#0F434A] mt-1">${kpis.costos.mano_obra}</p>
               </div>
 
               <div className="p-3 bg-white/40 rounded-2xl border border-white/60">
-                <p className="text-[10px] text-slate-500 font-bold uppercase">Costo Repuestos</p>
+                <p className="text-[11px] text-slate-500 font-bold uppercase">Costo Repuestos</p>
                 <p className="text-xl font-black text-[#0F434A] mt-1">${kpis.costos.materiales}</p>
               </div>
 
               <div className="p-3 bg-white/40 rounded-2xl border border-white/60">
-                <p className="text-[10px] text-slate-500 font-bold uppercase">Downtime Total</p>
+                <p className="text-[11px] text-slate-500 font-bold uppercase">Downtime Total</p>
                 <p className="text-xl font-black text-rose-700 mt-1">{kpis.tiempo_inactividad.horas_totales} hrs</p>
               </div>
             </div>
@@ -344,16 +344,16 @@ export const MachineDetailModal: React.FC<MachineDetailModalProps> = ({
                       <div>
                         <div className="flex items-center gap-2">
                           <span className="font-bold text-slate-800">{w.numero}</span>
-                          <span className="text-[10px] font-bold px-2 py-0.5 bg-white/60 text-slate-700 rounded-full border border-white/80">
+                          <span className="text-[11px] font-bold px-2 py-0.5 bg-white/60 text-slate-700 rounded-full border border-white/80">
                             {w.estado.nombre}
                           </span>
                         </div>
-                        <p className="text-[11px] text-slate-600 mt-0.5 truncate">{w.descripcion_problema_inicial}</p>
+                        <p className="text-[12px] text-slate-600 mt-0.5 truncate">{w.descripcion_problema_inicial}</p>
                       </div>
 
                       <div className="text-right shrink-0">
                         <p className="font-extrabold text-[#0F434A]">${w.costo_total}</p>
-                        <p className="text-[10px] text-slate-400">{new Date(w.created_at).toLocaleDateString('es-ES')}</p>
+                        <p className="text-[11px] text-slate-400">{new Date(w.created_at).toLocaleDateString('es-ES')}</p>
                       </div>
                     </div>
                   ))

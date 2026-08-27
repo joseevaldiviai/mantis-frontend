@@ -64,6 +64,18 @@ export const Header: React.FC<HeaderProps> = ({
   const actualUnread = unreadNotifications !== undefined ? unreadNotifications : unreadCount;
   const handleQrClick = onOpenQrReport || onOpenPublicQrReport || (() => {});
 
+  // Request push notification permission on first interaction
+  React.useEffect(() => {
+    if ('Notification' in window && Notification.permission === 'default') {
+      const requestPermission = () => {
+        Notification.requestPermission();
+        window.removeEventListener('click', requestPermission);
+      };
+      window.addEventListener('click', requestPermission, { once: true });
+      return () => window.removeEventListener('click', requestPermission);
+    }
+  }, []);
+
   // Filtrar pestañas según el rol del usuario
   const userRole = user?.rol || 'tecnico';
   const navTabs = allNavTabs.filter(tab => tab.roles.includes(userRole as any));
@@ -114,7 +126,7 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 <Bell className="w-5 h-5" />
                 {actualUnread > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full min-w-[16px] text-center shadow-2xs animate-pulse">
+                  <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[16px] text-center shadow-2xs animate-pulse">
                     {actualUnread}
                   </span>
                 )}
@@ -159,7 +171,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <span className="font-extrabold text-xl tracking-tight text-slate-800">
                   Mantis
                 </span>
-                <span className="text-[10px] uppercase font-bold tracking-widest bg-[#D9EDEE] text-[#0F434A] px-2.5 py-0.5 rounded-full border border-[#3D848C]/60">
+                <span className="text-[11px] uppercase font-bold tracking-widest bg-[#D9EDEE] text-[#0F434A] px-2.5 py-0.5 rounded-full border border-[#3D848C]/60">
                   CMMS & Inventario
                 </span>
               </div>
@@ -176,7 +188,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <Building2 className="w-3.5 h-3.5 text-[#165B62]" />
                 <span className="font-medium">{company.nombre}</span>
                 {company.nit_ruc && (
-                  <span className="text-slate-400 text-[11px]">({company.nit_ruc})</span>
+                  <span className="text-slate-400 text-[12px]">({company.nit_ruc})</span>
                 )}
               </div>
             )}
@@ -213,7 +225,7 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <Bell className="w-5 h-5" />
               {actualUnread > 0 && (
-                <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center shadow-2xs animate-pulse">
+                <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[11px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center shadow-2xs animate-pulse">
                   {actualUnread}
                 </span>
               )}
@@ -238,7 +250,7 @@ export const Header: React.FC<HeaderProps> = ({
                 </div>
                 <div className="text-left text-xs">
                   <p className="font-semibold text-slate-800 leading-tight">{user.nombre} {user.apellido}</p>
-                  <p className="text-[10px] text-slate-500 capitalize">{user.cargo || user.rol}</p>
+                  <p className="text-[11px] text-slate-500 capitalize">{user.cargo || user.rol}</p>
                 </div>
                 {onLogout && (
                   <button
@@ -324,7 +336,7 @@ export const Header: React.FC<HeaderProps> = ({
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-bold text-slate-800 truncate">{user.nombre} {user.apellido}</p>
-                    <p className="text-[11px] text-slate-500 capitalize truncate">{user.cargo || user.rol}</p>
+                    <p className="text-[12px] text-slate-500 capitalize truncate">{user.cargo || user.rol}</p>
                   </div>
                 </div>
               </div>
@@ -332,7 +344,7 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Navigation Items */}
             <div className="flex-1 overflow-y-auto px-3 py-3">
-              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2 mb-2">Navegación</p>
+              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider px-2 mb-2">Navegación</p>
               <div className="flex flex-col gap-0.5">
                 {navTabs.map((tab) => {
                   const Icon = tab.icon;

@@ -20,7 +20,7 @@ export const RagView: React.FC = () => {
             </div>
             <div>
               <h2 className="text-lg font-black text-slate-900">Asistente IA (RAG)</h2>
-              <span className="inline-block px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[9px] font-bold uppercase tracking-wide">
+              <span className="inline-block px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-wide">
                 En desarrollo — próximamente
               </span>
             </div>
@@ -35,7 +35,7 @@ export const RagView: React.FC = () => {
 
           <div className="mt-4 flex items-center gap-2 px-3 py-2 rounded-xl bg-[#D9EDEE]/50 border border-[#3D848C]/30 w-fit">
             <PanelLeftOpen className="w-4 h-4 text-[#165B62]" />
-            <span className="text-[11px] text-[#0F434A] font-medium">
+            <span className="text-[12px] text-[#0F434A] font-medium">
               Abrí el chat desde el botón <strong>"Asistente IA"</strong> en la barra superior o desde la barra lateral izquierda
             </span>
           </div>
@@ -49,7 +49,7 @@ export const RagView: React.FC = () => {
             <Lock className="w-4 h-4 text-[#165B62]" />
           </div>
           <h3 className="font-bold text-xs text-slate-900 mb-1">Aislado por empresa</h3>
-          <p className="text-[11px] text-slate-500 leading-relaxed">
+          <p className="text-[12px] text-slate-500 leading-relaxed">
             Cada integración usa un token dedicado, scopeado a una sola empresa — nunca ve ni mezcla datos de otro tenant.
           </p>
         </div>
@@ -59,7 +59,7 @@ export const RagView: React.FC = () => {
             <FileText className="w-4 h-4 text-[#165B62]" />
           </div>
           <h3 className="font-bold text-xs text-slate-900 mb-1">Fuente de contexto</h3>
-          <p className="text-[11px] text-slate-500 leading-relaxed">
+          <p className="text-[12px] text-slate-500 leading-relaxed">
             Manuales por máquina, historial de mantenimientos y checklists — todo indexado automáticamente.
           </p>
         </div>
@@ -69,7 +69,7 @@ export const RagView: React.FC = () => {
             <QrCode className="w-4 h-4 text-[#165B62]" />
           </div>
           <h3 className="font-bold text-xs text-slate-900 mb-1">Desde el QR del equipo</h3>
-          <p className="text-[11px] text-slate-500 leading-relaxed">
+          <p className="text-[12px] text-slate-500 leading-relaxed">
             Escaneá el QR de una máquina y preguntale directo al asistente sobre ese equipo puntual.
           </p>
         </div>
@@ -80,10 +80,10 @@ export const RagView: React.FC = () => {
         <div className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center flex-shrink-0 mt-0.5">
           <Info className="w-3.5 h-3.5 text-slate-500" />
         </div>
-        <p className="text-[11px] text-slate-500 leading-relaxed">
+        <p className="text-[12px] text-slate-500 leading-relaxed">
           <span className="font-semibold text-slate-700">Nota técnica:</span> el backend ya expone
           los endpoints necesarios — documentos por máquina, historial, y el rol{' '}
-          <code className="px-1 py-0.5 bg-slate-100 rounded text-[10px]">integracion</code> de
+          <code className="px-1 py-0.5 bg-slate-100 rounded text-[11px]">integracion</code> de
           solo lectura — para conectar cualquier pipeline de RAG sin cambios en el modelo de datos.
         </p>
       </div>
@@ -106,12 +106,12 @@ export const RagView: React.FC = () => {
             { step: '4', title: '¡Preguntar!', desc: 'Escribir en lenguaje natural y recibir respuestas citando fuentes.' }
           ].map(({ step, title, desc }) => (
             <div key={step} className="flex items-start gap-3 p-2 rounded-lg hover:bg-white/30 transition-all">
-              <span className="w-5 h-5 rounded-md bg-[#D9EDEE] text-[#0A2E33] text-[10px] font-bold flex items-center justify-center flex-shrink-0">
+              <span className="w-5 h-5 rounded-md bg-[#D9EDEE] text-[#0A2E33] text-[11px] font-bold flex items-center justify-center flex-shrink-0">
                 {step}
               </span>
               <div>
-                <p className="text-[11px] font-semibold text-slate-800">{title}</p>
-                <p className="text-[10px] text-slate-500">{desc}</p>
+                <p className="text-[12px] font-semibold text-slate-800">{title}</p>
+                <p className="text-[11px] text-slate-500">{desc}</p>
               </div>
             </div>
           ))}

@@ -156,7 +156,7 @@ export const MachinesView: React.FC = () => {
                   <span className="font-mono text-xs font-extrabold text-[#0F434A] bg-[#D9EDEE] px-2 py-0.5 rounded-lg border border-[#3D848C]/50">
                     {m.codigo}
                   </span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 bg-white/60 text-slate-600 rounded-full border border-white/80">
+                  <span className="text-[11px] font-bold px-2 py-0.5 bg-white/60 text-slate-600 rounded-full border border-white/80">
                     {m.area || 'General'}
                   </span>
                 </div>
@@ -171,7 +171,7 @@ export const MachinesView: React.FC = () => {
               </div>
 
               <div className="pt-3 border-t border-white/60 flex items-center justify-between text-xs">
-                <span className="text-slate-400 text-[11px]">Marca: <strong className="text-slate-700">{m.marca || 'Genérica'}</strong></span>
+                <span className="text-slate-400 text-[12px]">Marca: <strong className="text-slate-700">{m.marca || 'Genérica'}</strong></span>
                 <span className="font-bold text-[#0F434A] flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
                   Ver QR & Ficha <ChevronRight className="w-3.5 h-3.5" />
                 </span>

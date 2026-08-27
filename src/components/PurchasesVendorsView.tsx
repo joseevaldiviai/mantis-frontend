@@ -180,18 +180,18 @@ export const PurchasesVendorsView: React.FC = () => {
               <div>
                 <div className="flex items-center gap-2">
                   <span className="font-extrabold text-xs text-slate-800 font-mono">{po.numero}</span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 bg-[#D9EDEE] text-[#0F434A] rounded-lg border border-[#3D848C]/50 uppercase">
+                  <span className="text-[11px] font-bold px-2 py-0.5 bg-[#D9EDEE] text-[#0F434A] rounded-lg border border-[#3D848C]/50 uppercase">
                     {po.estado}
                   </span>
                 </div>
 
                 <p className="text-xs font-bold text-slate-800 mt-1">Proveedor: {po.vendor?.nombre || 'General'}</p>
-                <p className="text-[11px] text-slate-500 mt-0.5">{po.items.map(i => `${i.nombre} (${i.cantidad} u)`).join(', ')}</p>
+                <p className="text-[12px] text-slate-500 mt-0.5">{po.items.map(i => `${i.nombre} (${i.cantidad} u)`).join(', ')}</p>
               </div>
 
               <div className="text-right shrink-0">
                 <p className="text-base font-black text-slate-800">${Number(po.total).toFixed(2)}</p>
-                <p className="text-[10px] text-slate-400">Emisión: {po.created_at ? new Date(po.created_at).toLocaleDateString('es-ES') : 'Reciente'}</p>
+                <p className="text-[11px] text-slate-400">Emisión: {po.created_at ? new Date(po.created_at).toLocaleDateString('es-ES') : 'Reciente'}</p>
               </div>
             </div>
           ))}
@@ -204,9 +204,9 @@ export const PurchasesVendorsView: React.FC = () => {
           {vendors.map(v => (
             <div key={v.id} className="glass-card p-5 rounded-2xl space-y-2">
               <h3 className="font-bold text-slate-800 text-xs">{v.nombre}</h3>
-              <p className="text-[11px] text-slate-600">Contacto: <strong>{v.contacto_nombre || 'N/A'}</strong></p>
-              <p className="text-[11px] text-slate-600">Teléfono: <strong>{v.telefono || 'N/A'}</strong></p>
-              <p className="text-[11px] text-slate-600">Email: <strong>{v.email || 'N/A'}</strong></p>
+              <p className="text-[12px] text-slate-600">Contacto: <strong>{v.contacto_nombre || 'N/A'}</strong></p>
+              <p className="text-[12px] text-slate-600">Teléfono: <strong>{v.telefono || 'N/A'}</strong></p>
+              <p className="text-[12px] text-slate-600">Email: <strong>{v.email || 'N/A'}</strong></p>
             </div>
           ))}
         </div>

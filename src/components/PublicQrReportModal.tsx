@@ -126,7 +126,7 @@ export const PublicQrReportModal: React.FC<PublicQrReportModalProps> = ({
               </div>
 
               {/* Sample QR presets */}
-              <div className="flex items-center gap-1.5 mt-2 flex-wrap text-[11px] text-stone-500">
+              <div className="flex items-center gap-1.5 mt-2 flex-wrap text-[12px] text-stone-500">
                 <span>Presets de prueba:</span>
                 <button
                   type="button"
@@ -155,9 +155,9 @@ export const PublicQrReportModal: React.FC<PublicQrReportModalProps> = ({
                 <div className="mt-3 p-3 bg-emerald-50/70 border border-emerald-200 rounded-xl flex items-center justify-between">
                   <div>
                     <p className="text-xs font-bold text-emerald-950">{machineInfo.nombre}</p>
-                    <p className="text-[11px] text-emerald-700">{machineInfo.codigo} • Área: {machineInfo.area || 'General'}</p>
+                    <p className="text-[12px] text-emerald-700">{machineInfo.codigo} • Área: {machineInfo.area || 'General'}</p>
                   </div>
-                  <span className="text-[10px] font-bold bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full">
+                  <span className="text-[11px] font-bold bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full">
                     Equipo Identificado
                   </span>
                 </div>

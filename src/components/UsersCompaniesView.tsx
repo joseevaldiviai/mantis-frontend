@@ -359,15 +359,15 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
   const getRoleBadge = (rol: string) => {
     switch (rol) {
       case 'super_admin':
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-900 border border-purple-200">Super Admin</span>;
+        return <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-purple-100 text-purple-900 border border-purple-200">Super Admin</span>;
       case 'administrador':
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#D9EDEE] text-[#0F434A] border border-[#3D848C]/60">Administrador</span>;
+        return <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#D9EDEE] text-[#0F434A] border border-[#3D848C]/60">Administrador</span>;
       case 'tecnico':
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-100 text-sky-900 border border-sky-200">Técnico</span>;
+        return <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-sky-100 text-sky-900 border border-sky-200">Técnico</span>;
       case 'produccion':
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-200">Producción</span>;
+        return <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-900 border border-amber-200">Producción</span>;
       default:
-        return <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700">{rol}</span>;
+        return <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-700">{rol}</span>;
     }
   };
 
@@ -409,7 +409,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
                 <Building className="w-4 h-4" />
                 <span>+ Nueva Empresa</span>
               </button>
-              <div className="absolute right-0 top-full mt-1.5 w-56 p-2.5 rounded-xl bg-slate-800 text-white text-[11px] font-medium shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-10">
+              <div className="absolute right-0 top-full mt-1.5 w-56 p-2.5 rounded-xl bg-slate-800 text-white text-[12px] font-medium shadow-xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-10">
                 <p>Solo los <span className="font-bold text-purple-300">Super Admins</span> pueden crear empresas.</p>
                 <p className="text-slate-400 mt-1">Contacta al administrador global del sistema.</p>
                 <div className="absolute -top-1 right-4 w-2 h-2 bg-slate-800 rotate-45" />
@@ -445,31 +445,31 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <BarChart3 className="w-4 h-4 text-[#165B62]" />
-                <span className="text-[11px] font-bold text-slate-600 uppercase tracking-wide">Resumen Sistema</span>
+                <span className="text-[12px] font-bold text-slate-600 uppercase tracking-wide">Resumen Sistema</span>
               </div>
-              <span className="text-[10px] font-bold text-[#165B62] bg-[#D9EDEE] px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+              <span className="text-[11px] font-bold text-[#165B62] bg-[#D9EDEE] px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                 Ver KPIs →
               </span>
             </div>
             <div className="grid grid-cols-2 gap-2">
               <div>
                 <p className="text-lg font-black text-slate-800 leading-tight">{totalEmpresas}</p>
-                <p className="text-[10px] text-slate-500">Empresas</p>
+                <p className="text-[11px] text-slate-500">Empresas</p>
               </div>
               <div>
                 <p className="text-lg font-black text-slate-800 leading-tight">{totalUsuarios}</p>
-                <p className="text-[10px] text-slate-500">Usuarios</p>
+                <p className="text-[11px] text-slate-500">Usuarios</p>
               </div>
               <div>
                 <p className="text-lg font-black text-emerald-700 leading-tight">{usuariosActivos}</p>
-                <p className="text-[10px] text-slate-500">Activos</p>
+                <p className="text-[11px] text-slate-500">Activos</p>
               </div>
               <div>
                 <p className="text-lg font-black text-rose-600 leading-tight">{usuariosInactivos}</p>
-                <p className="text-[10px] text-slate-500">Inactivos</p>
+                <p className="text-[11px] text-slate-500">Inactivos</p>
               </div>
             </div>
-            <div className="mt-3 pt-2 border-t border-white/60 flex items-center gap-3 text-[10px] text-slate-500">
+            <div className="mt-3 pt-2 border-t border-white/60 flex items-center gap-3 text-[11px] text-slate-500">
               <span className="flex items-center gap-1"><UserCog className="w-3 h-3 text-sky-600" /> {adminsCount} admin{adminsCount !== 1 ? 's' : ''}</span>
               <span className="flex items-center gap-1"><Factory className="w-3 h-3 text-amber-600" /> {tecnicosCount + produccionCount} técnico{tecnicosCount + produccionCount !== 1 ? 's' : ''}</span>
             </div>
@@ -494,21 +494,21 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
                   <span className="text-xs font-bold truncate">{comp.nombre}</span>
                   {isSel && <Check className="w-3.5 h-3.5 text-[#165B62] shrink-0" />}
                 </div>
-                <p className="text-[10px] text-slate-400 mt-0.5 font-mono">{comp.nit_ruc || 'Sin RUT/NIT'}</p>
+                <p className="text-[11px] text-slate-400 mt-0.5 font-mono">{comp.nit_ruc || 'Sin RUT/NIT'}</p>
                 <div className="mt-2 flex items-center gap-3">
                   <div>
                     <p className="text-base font-black leading-tight">{compUsers.length}</p>
-                    <p className="text-[10px] text-slate-500">usuarios</p>
+                    <p className="text-[11px] text-slate-500">usuarios</p>
                   </div>
                   <div className="h-6 w-px bg-slate-300/50" />
                   <div>
                     <p className="text-base font-black text-emerald-700 leading-tight">{compActive}</p>
-                    <p className="text-[10px] text-slate-500">activos</p>
+                    <p className="text-[11px] text-slate-500">activos</p>
                   </div>
                 </div>
                 <div className="mt-2 flex items-center gap-1">
                   <span className={`w-2 h-2 rounded-full ${comp.activo ? 'bg-emerald-500' : 'bg-rose-400'}`} />
-                  <span className="text-[10px] text-slate-400">{comp.activo ? 'Activa' : 'Inactiva'}</span>
+                  <span className="text-[11px] text-slate-400">{comp.activo ? 'Activa' : 'Inactiva'}</span>
                 </div>
               </button>
             );
@@ -556,7 +556,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
               <button
                 key={r.id}
                 onClick={() => setRoleFilter(r.id)}
-                className={`px-2.5 py-1.5 rounded-lg text-[11px] font-bold transition-all shrink-0 cursor-pointer ${
+                className={`px-2.5 py-1.5 rounded-lg text-[12px] font-bold transition-all shrink-0 cursor-pointer ${
                   roleFilter === r.id
                     ? 'bg-slate-800 text-white shadow-2xs'
                     : 'bg-white/40 text-slate-600 hover:bg-white/70'
@@ -610,20 +610,20 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
                       {/* Usuario */}
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#3D848C] to-[#165B62] flex items-center justify-center text-white font-bold text-[11px] shadow-2xs shrink-0">
+                          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#3D848C] to-[#165B62] flex items-center justify-center text-white font-bold text-[12px] shadow-2xs shrink-0">
                             {u.nombre.charAt(0)}{u.apellido.charAt(0)}
                           </div>
                           <div>
                             <div className="flex items-center gap-1.5">
                               <p className="font-bold text-slate-800">{u.nombre} {u.apellido}</p>
                               {isMe && (
-                                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#D9EDEE] text-[#0F434A] border border-[#3D848C]">
+                                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-[#D9EDEE] text-[#0F434A] border border-[#3D848C]">
                                   Tú
                                 </span>
                               )}
                             </div>
                             {u.cargo && (
-                              <p className="text-[11px] text-slate-400">{u.cargo}</p>
+                              <p className="text-[12px] text-slate-400">{u.cargo}</p>
                             )}
                           </div>
                         </div>
@@ -665,7 +665,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
                         <div className="flex items-center justify-end gap-1">
                           <button
                             onClick={() => handleToggleUserActive(u)}
-                            className={`px-2 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1 cursor-pointer transition-all ${
+                            className={`px-2 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1 cursor-pointer transition-all ${
                               u.activo
                                 ? 'text-[#0F434A] hover:bg-rose-50 hover:text-rose-700'
                                 : 'text-emerald-700 hover:bg-emerald-50'
@@ -711,7 +711,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
           </div>
 
           {/* Footer count */}
-          <div className="px-4 py-2.5 border-t border-white/40 bg-white/20 flex items-center justify-between text-[11px] text-slate-500">
+          <div className="px-4 py-2.5 border-t border-white/40 bg-white/20 flex items-center justify-between text-[12px] text-slate-500">
             <span>Mostrando {filteredUsers.length} de {totalUsuarios} usuarios</span>
             <span>{totalEmpresas} empresas registradas</span>
           </div>
@@ -767,7 +767,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
                   ))}
                 </select>
                 {currentUser?.rol !== 'super_admin' && (
-                  <p className="text-[10px] text-slate-400 mt-1">Solo Super Admin puede cambiar de empresa</p>
+                  <p className="text-[11px] text-slate-400 mt-1">Solo Super Admin puede cambiar de empresa</p>
                 )}
               </div>
 
@@ -867,7 +867,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
-                <p className="text-[10px] text-slate-400 mt-1">
+                <p className="text-[11px] text-slate-400 mt-1">
                   {editingUser
                     ? 'Si se deja vacío, no se cambiará la contraseña actual.'
                     : 'Si se deja vacío, el usuario no podrá iniciar sesión.'}
@@ -902,7 +902,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
                 <label className="block text-xs font-bold text-slate-700 mb-2">Especialidades Técnicas</label>
                 <div className="grid grid-cols-2 gap-2 bg-white/30 p-3 rounded-2xl border border-white/60">
                   {availableSpecialties.length === 0 ? (
-                    <p className="text-[10px] text-slate-400 italic p-1 col-span-2">
+                    <p className="text-[11px] text-slate-400 italic p-1 col-span-2">
                       No hay especialidades cargadas para esta empresa todavía.
                     </p>
                   ) : (
@@ -1070,7 +1070,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
 
             {/* Date filter */}
             <div className="flex items-center gap-2 mt-4 mb-5">
-              <span className="text-[11px] font-bold text-slate-500">Período:</span>
+              <span className="text-[12px] font-bold text-slate-500">Período:</span>
               <input
                 type="date"
                 value={resumenDesde}
@@ -1095,25 +1095,25 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
               <div className="space-y-4">
                 {/* KPIs Row 1: Órdenes de Trabajo */}
                 <div>
-                  <h4 className="text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                  <h4 className="text-[12px] font-bold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
                     <Wrench className="w-3.5 h-3.5 text-[#165B62]" /> Órdenes de Trabajo
                   </h4>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     <div className="glass-card p-3 rounded-xl text-center">
                       <p className="text-xl font-black text-slate-800">{resumenData.ordenes_trabajo.total}</p>
-                      <p className="text-[10px] text-slate-500">Total OT</p>
+                      <p className="text-[11px] text-slate-500">Total OT</p>
                     </div>
                     <div className="glass-card p-3 rounded-xl text-center">
                       <p className="text-xl font-black text-amber-700">{resumenData.ordenes_trabajo.backlog_abiertas}</p>
-                      <p className="text-[10px] text-slate-500">Backlog Abiertas</p>
+                      <p className="text-[11px] text-slate-500">Backlog Abiertas</p>
                     </div>
                     <div className="glass-card p-3 rounded-xl text-center">
                       <p className="text-xl font-black text-rose-600">{resumenData.ordenes_trabajo.vencidas}</p>
-                      <p className="text-[10px] text-slate-500">Vencidas</p>
+                      <p className="text-[11px] text-slate-500">Vencidas</p>
                     </div>
                     <div className="glass-card p-3 rounded-xl text-center">
                       <p className="text-xl font-black text-sky-700">{resumenData.ordenes_trabajo.mttr_minutos}<span className="text-xs font-normal"> min</span></p>
-                      <p className="text-[10px] text-slate-500">MTTR</p>
+                      <p className="text-[11px] text-slate-500">MTTR</p>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-3 mt-2">
@@ -1121,14 +1121,14 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
                       <div className="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center"><AlertTriangle className="w-4 h-4 text-orange-600" /></div>
                       <div>
                         <p className="text-sm font-black text-slate-800">{resumenData.ordenes_trabajo.correctivas}</p>
-                        <p className="text-[10px] text-slate-500">Correctivas</p>
+                        <p className="text-[11px] text-slate-500">Correctivas</p>
                       </div>
                     </div>
                     <div className="glass-card p-3 rounded-xl flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center"><Calendar className="w-4 h-4 text-emerald-600" /></div>
                       <div>
                         <p className="text-sm font-black text-slate-800">{resumenData.ordenes_trabajo.preventivas}</p>
-                        <p className="text-[10px] text-slate-500">Preventivas</p>
+                        <p className="text-[11px] text-slate-500">Preventivas</p>
                       </div>
                     </div>
                   </div>
@@ -1138,7 +1138,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Costos */}
                   <div>
-                    <h4 className="text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                    <h4 className="text-[12px] font-bold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
                       <DollarSign className="w-3.5 h-3.5 text-[#165B62]" /> Costos
                     </h4>
                     <div className="glass-card p-4 rounded-xl space-y-2">
@@ -1159,7 +1159,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
 
                   {/* Tiempo Inactividad */}
                   <div>
-                    <h4 className="text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                    <h4 className="text-[12px] font-bold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
                       <Clock className="w-3.5 h-3.5 text-[#165B62]" /> Tiempo de Inactividad
                     </h4>
                     <div className="glass-card p-4 rounded-xl space-y-2">
@@ -1183,7 +1183,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Mantenimiento Preventivo */}
                   <div>
-                    <h4 className="text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                    <h4 className="text-[12px] font-bold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
                       <ShieldCheck className="w-3.5 h-3.5 text-[#165B62]" /> Mantenimiento Preventivo
                     </h4>
                     <div className="glass-card p-4 rounded-xl space-y-2">
@@ -1200,7 +1200,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
 
                   {/* Inventario */}
                   <div>
-                    <h4 className="text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                    <h4 className="text-[12px] font-bold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
                       <Package className="w-3.5 h-3.5 text-[#165B62]" /> Inventario
                     </h4>
                     <div className="glass-card p-4 rounded-xl space-y-2">
@@ -1219,7 +1219,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
                 {/* Top Máquinas por Costo */}
                 {resumenData.top_maquinas.por_costo.length > 0 && (
                   <div>
-                    <h4 className="text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                    <h4 className="text-[12px] font-bold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
                       <TrendingUp className="w-3.5 h-3.5 text-[#165B62]" /> Top Máquinas por Costo
                     </h4>
                     <div className="glass-card rounded-xl overflow-hidden">
@@ -1246,11 +1246,11 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
                 )}
 
                 {/* Footer */}
-                <div className="pt-3 border-t border-white/60 flex items-center justify-between text-[11px] text-slate-400">
+                <div className="pt-3 border-t border-white/60 flex items-center justify-between text-[12px] text-slate-400">
                   <span>Período: {resumenData.periodo.desde} — {resumenData.periodo.hasta}</span>
                   <button
                     onClick={() => setIsResumenOpen(false)}
-                    className="px-3 py-1.5 text-[11px] font-bold text-slate-900 hover:text-white bg-[#3D848C] hover:bg-[#165B62] rounded-xl cursor-pointer"
+                    className="px-3 py-1.5 text-[12px] font-bold text-slate-900 hover:text-white bg-[#3D848C] hover:bg-[#165B62] rounded-xl cursor-pointer"
                   >
                     Cerrar
                   </button>

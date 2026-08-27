@@ -30,7 +30,7 @@ const SUGGESTED_QUESTIONS = [
 function SourceBadge({ source }: { source: RagSource }) {
   const Icon = SOURCE_ICONS[source.tipo] || FileText;
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-[#D9EDEE]/60 text-[#0A2E33] text-[10px] font-medium border border-[#3D848C]/30">
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-[#D9EDEE]/60 text-[#0A2E33] text-[11px] font-medium border border-[#3D848C]/30">
       <Icon className="w-2.5 h-2.5 text-[#165B62]" />
       <span>{source.titulo}</span>
       {source.relevancia !== undefined && (
@@ -149,7 +149,7 @@ export const RagChatPanel: React.FC = () => {
           </div>
           <div>
             <h3 className="text-sm font-bold text-slate-800">Asistente RAG</h3>
-            <span className="text-[10px] text-slate-500">Conectado al backend</span>
+            <span className="text-[11px] text-slate-500">Conectado al backend</span>
           </div>
         </div>
         <div className="flex items-center gap-1">
@@ -177,7 +177,7 @@ export const RagChatPanel: React.FC = () => {
       {isConfigOpen && (
         <div className="px-4 py-3 border-b border-white/40 bg-white/30 space-y-2 flex-shrink-0">
           <div>
-            <label className="block text-[10px] font-semibold text-slate-600 uppercase tracking-wider mb-1">
+            <label className="block text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-1">
               URL del Backend RAG
             </label>
             <input
@@ -190,7 +190,7 @@ export const RagChatPanel: React.FC = () => {
           </div>
           <button
             onClick={handleSaveConfig}
-            className="w-full px-3 py-1.5 text-[10px] font-semibold bg-[#3D848C] text-white rounded-lg hover:bg-[#165B62] transition-all"
+            className="w-full px-3 py-1.5 text-[11px] font-semibold bg-[#3D848C] text-white rounded-lg hover:bg-[#165B62] transition-all"
           >
             Guardar URL
           </button>
@@ -232,7 +232,7 @@ export const RagChatPanel: React.FC = () => {
                 </div>
               )}
 
-              <div className={`mt-1 text-[9px] ${msg.role === 'user' ? 'text-white/60' : 'text-slate-400'}`}>
+              <div className={`mt-1 text-[10px] ${msg.role === 'user' ? 'text-white/60' : 'text-slate-400'}`}>
                 {msg.timestamp.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}
               </div>
             </div>
@@ -263,13 +263,13 @@ export const RagChatPanel: React.FC = () => {
       {/* Preguntas sugeridas */}
       {messages.length <= 1 && (
         <div className="px-4 pb-2 flex-shrink-0">
-          <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider mb-1.5">Sugerencias</p>
+          <p className="text-[11px] text-slate-400 font-medium uppercase tracking-wider mb-1.5">Sugerencias</p>
           <div className="flex flex-wrap gap-1.5">
             {SUGGESTED_QUESTIONS.map((q, i) => (
               <button
                 key={i}
                 onClick={() => handleSend(q)}
-                className="text-[10px] px-2.5 py-1 rounded-lg bg-white/50 hover:bg-white/80 text-slate-600 hover:text-slate-800 border border-white/60 hover:border-[#3D848C]/40 transition-all cursor-pointer text-left leading-tight"
+                className="text-[11px] px-2.5 py-1 rounded-lg bg-white/50 hover:bg-white/80 text-slate-600 hover:text-slate-800 border border-white/60 hover:border-[#3D848C]/40 transition-all cursor-pointer text-left leading-tight"
               >
                 {q}
               </button>
@@ -304,7 +304,7 @@ export const RagChatPanel: React.FC = () => {
             )}
           </button>
         </div>
-        <p className="text-[9px] text-slate-400 mt-1.5 text-center">
+        <p className="text-[10px] text-slate-400 mt-1.5 text-center">
           Enter para enviar · Shift+Enter nueva línea
         </p>
       </div>

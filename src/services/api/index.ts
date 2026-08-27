@@ -90,7 +90,7 @@ export class MantisApiService extends ApiClient {
   public addChecklistItem = (workOrderId: number, texto: string) => this.workOrders.addChecklistItem(workOrderId, texto);
   public toggleChecklistItem = (workOrderId: number, itemId: string | number, completado: boolean) => this.workOrders.toggleChecklistItem(workOrderId, itemId, completado);
   public addMaterialRequest = (workOrderId: number, data: any) => this.workOrders.addMaterialRequest(workOrderId, data);
-  public addComment = (workOrderId: number, mensaje: string, imagen_url?: string | null) => this.workOrders.addComment(workOrderId, mensaje, imagen_url);
+  public addComment = (workOrderId: number, mensaje: string, imagen_url?: string | null, tiempo_utilizado?: number | null) => this.workOrders.addComment(workOrderId, mensaje, imagen_url, tiempo_utilizado);
   public addCollaborator = (workOrderId: number, userId: number) => this.workOrders.addCollaborator(workOrderId, userId);
   public removeCollaborator = (workOrderId: number, collaboratorId: string | number) => this.workOrders.removeCollaborator(workOrderId, collaboratorId);
   public finalizeWorkOrder = (workOrderId: number, data: any) => this.workOrders.finalizeWorkOrder(workOrderId, data);
@@ -118,6 +118,10 @@ export class MantisApiService extends ApiClient {
   public getNotifications = () => this.notifications.getNotifications();
   public getUnreadNotificationCount = () => this.notifications.getUnreadNotificationCount();
   public markAllNotificationsAsRead = () => this.notifications.markAllNotificationsAsRead();
+  public createNotification = (params: { tipo: string; mensaje: string; data?: Record<string, unknown> }) => this.notifications.createNotification(params);
+  public createBulkNotifications = (params: { tipo: string; mensaje: string; data?: Record<string, unknown>; user_ids: number[] }) => this.notifications.createBulkNotifications(params);
+  public markNotificationAsRead = (id: string) => this.notifications.markAsRead(id);
+  public deleteNotification = (id: string) => this.notifications.deleteNotification(id);
 
   // QR
   public getPublicQrInfo = (token: string) => this.qr.getPublicQrInfo(token);

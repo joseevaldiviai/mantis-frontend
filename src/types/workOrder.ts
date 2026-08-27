@@ -21,6 +21,7 @@ export interface EstadoOT {
   orden: number;
   es_estado_final: boolean;
   activo: boolean;
+  color: string | null;
 }
 
 export interface ChecklistItem {
@@ -55,6 +56,7 @@ export interface WorkOrderComment {
   tipo: string;
   mensaje: string;
   imagen_url: string | null;
+  tiempo_utilizado: number | null;
   created_at: string;
   usuario?: User;
 }

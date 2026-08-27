@@ -16,10 +16,14 @@ import {
   QrCode,
   Activity,
   CheckCircle2,
-  PieChart
+  PieChart,
+  Users,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
-import { DashboardSummary } from '../types';
+import { DashboardSummary, User } from '../types';
 import { api } from '../services/api';
+import { WorkerDetailPanel } from './WorkerDetailPanel';
 
 interface DashboardViewProps {
   onNavigateTab: (tab: string) => void;
@@ -37,7 +41,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const [desde, setDesde] = useState('2026-08-01');
   const [hasta, setHasta] = useState('2026-08-07');
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showWorkers, setShowWorkers] = useState(false);
 
   const loadSummary = async () => {
     setLoading(true);
@@ -50,6 +56,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    api.getMe().then(u => setCurrentUser(u)).catch(() => {});
+  }, []);
 
   useEffect(() => {
     loadSummary();
@@ -120,7 +130,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               <p className="text-xs font-bold text-amber-950">
                 Alerta de Inventario: {inventario.repuestos_bajo_stock} Repuesto(s) Bajo Stock Mínimo
               </p>
-              <p className="text-[11px] text-amber-800">
+              <p className="text-[12px] text-amber-800">
                 Existen insumos críticos con existencia inferior al punto de reorden. Revisa y genera órdenes de compra.
               </p>
             </div>
@@ -162,7 +172,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <span className="text-2xl font-black text-slate-800">{ordenes_trabajo.backlog_abiertas}</span>
             <span className="text-xs text-slate-500">de {ordenes_trabajo.total} totales</span>
           </div>
-          <div className="mt-3 flex items-center gap-2 text-[11px] text-slate-500 border-t border-white/60 pt-2">
+          <div className="mt-3 flex items-center gap-2 text-[12px] text-slate-500 border-t border-white/60 pt-2">
             <span className="text-rose-600 font-bold">{ordenes_trabajo.vencidas} vencidas</span>
             <span>•</span>
             <span className="text-[#0F434A] font-medium">{ordenes_trabajo.correctivas} correctivas / {ordenes_trabajo.preventivas} preventivas</span>
@@ -186,7 +196,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <span className="text-2xl font-black text-slate-800">${costos.total.toLocaleString('es-ES', { minimumFractionDigits: 2 })}</span>
             <span className="text-xs text-[#0F434A] font-bold">Mantenimiento</span>
           </div>
-          <div className="mt-3 flex items-center justify-between text-[11px] text-slate-500 border-t border-white/60 pt-2">
+          <div className="mt-3 flex items-center justify-between text-[12px] text-slate-500 border-t border-white/60 pt-2">
             <span>Mano Obra: ${costos.mano_obra.toFixed(0)}</span>
             <span>Repuestos: ${costos.materiales.toFixed(0)}</span>
           </div>
@@ -209,7 +219,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <span className="text-2xl font-black text-slate-800">{tiempo_inactividad.horas_totales} hrs</span>
             <span className="text-xs text-slate-500">MTTR: {ordenes_trabajo.mttr_minutos} min</span>
           </div>
-          <div className="mt-3 text-[11px] text-slate-500 border-t border-white/60 pt-2">
+          <div className="mt-3 text-[12px] text-slate-500 border-t border-white/60 pt-2">
             <span>{tiempo_inactividad.ordenes_con_downtime} OTs generaron paro de producción</span>
           </div>
         </div>
@@ -231,7 +241,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <span className="text-2xl font-black text-slate-800">${inventario.valor_total_estimado.toLocaleString('es-ES', { minimumFractionDigits: 2 })}</span>
             <span className="text-xs text-slate-500">Valorizado</span>
           </div>
-          <div className="mt-3 flex items-center justify-between text-[11px] border-t border-white/60 pt-2">
+          <div className="mt-3 flex items-center justify-between text-[12px] border-t border-white/60 pt-2">
             <span className="text-amber-700 font-bold">{inventario.repuestos_bajo_stock} bajo mínimo</span>
             <span className="text-[#0F434A] font-semibold">Stock Saludable</span>
           </div>
@@ -264,7 +274,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
               {Object.entries(ordenes_trabajo.por_estado).map(([stName, count]) => (
                 <div key={stName} className="p-3 bg-white/40 backdrop-blur-xs rounded-xl border border-white/60 text-center">
-                  <p className="text-[11px] font-semibold text-slate-500 truncate">{stName}</p>
+                  <p className="text-[12px] font-semibold text-slate-500 truncate">{stName}</p>
                   <p className="text-xl font-extrabold text-slate-800 mt-1">{count as number}</p>
                 </div>
               ))}
@@ -285,7 +295,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   };
                   return (
                     <div key={prio}>
-                      <div className="flex justify-between text-[11px] mb-1">
+                      <div className="flex justify-between text-[12px] mb-1">
                         <span className="capitalize font-semibold text-slate-700">{prio}</span>
                         <span className="text-slate-500">{count} OTs ({pct}%)</span>
                       </div>
@@ -338,7 +348,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 >
                   <QrCode className="w-4 h-4 text-emerald-200 mb-1" />
                   <p className="text-xs font-bold">Reporte QR</p>
-                  <p className="text-[10px] text-emerald-100">Terreno sin Login</p>
+                  <p className="text-[11px] text-emerald-100">Terreno sin Login</p>
                 </button>
 
                 <button
@@ -347,7 +357,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                 >
                   <Package className="w-4 h-4 text-emerald-200 mb-1" />
                   <p className="text-xs font-bold">+ Insumo</p>
-                  <p className="text-[10px] text-emerald-100">Alta de Repuesto</p>
+                  <p className="text-[11px] text-emerald-100">Alta de Repuesto</p>
                 </button>
               </div>
             </div>
@@ -376,12 +386,12 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                     </span>
                     <div>
                       <p className="text-xs font-bold text-slate-800">{item.nombre}</p>
-                      <p className="text-[10px] text-slate-500">{item.codigo}</p>
+                      <p className="text-[11px] text-slate-500">{item.codigo}</p>
                     </div>
                   </div>
                   <div className="text-right">
                     <p className="text-xs font-extrabold text-slate-800">${item.costo_total.toFixed(2)}</p>
-                    <p className="text-[10px] text-slate-500">Costo total OT</p>
+                    <p className="text-[11px] text-slate-500">Costo total OT</p>
                   </div>
                 </div>
               ))}
@@ -399,6 +409,33 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
 
       </div>
+
+      {/* Detalle de Trabajadores - Solo Admin/SuperAdmin */}
+      {currentUser && (currentUser.rol === 'super_admin' || currentUser.rol === 'administrador') && (
+        <div className="space-y-4">
+          <button
+            onClick={() => setShowWorkers(!showWorkers)}
+            className="w-full glass-card p-4 rounded-2xl flex items-center justify-between hover:bg-white/20 transition-colors cursor-pointer"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-[#D9EDEE] text-[#0F434A] rounded-xl">
+                <Users className="w-5 h-5" />
+              </div>
+              <div className="text-left">
+                <p className="text-[14px] font-bold text-slate-800">Detalle de Trabajadores</p>
+                <p className="text-[12px] text-slate-500">Rendimiento, OTs participadas y tiempo de trabajo por técnico</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              {showWorkers ? <ChevronUp className="w-5 h-5 text-slate-400" /> : <ChevronDown className="w-5 h-5 text-slate-400" />}
+            </div>
+          </button>
+
+          {showWorkers && (
+            <WorkerDetailPanel desde={desde} hasta={hasta} />
+          )}
+        </div>
+      )}
 
     </div>
   );

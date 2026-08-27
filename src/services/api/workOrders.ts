@@ -27,6 +27,7 @@ export class WorkOrdersApi {
     reportado_por_nombre?: string;
     reportado_por_contacto?: string;
     operarios_ids?: number[];
+    hora_termino?: string;
   }): Promise<WorkOrder> {
     const { operarios_ids, ...payload } = data;
     const created = await this.client.request<WorkOrder>('/ordenes-trabajo', {
@@ -77,10 +78,10 @@ export class WorkOrdersApi {
     });
   }
 
-  public async addComment(workOrderId: number, mensaje: string, imagen_url?: string | null): Promise<WorkOrderComment> {
+  public async addComment(workOrderId: number, mensaje: string, imagen_url?: string | null, tiempo_utilizado?: number | null): Promise<WorkOrderComment> {
     return this.client.request<WorkOrderComment>(`/ordenes-trabajo/${workOrderId}/comentarios`, {
       method: 'POST',
-      body: JSON.stringify({ mensaje, imagen_url, tipo: 'general' })
+      body: JSON.stringify({ mensaje, imagen_url, tipo: 'general', tiempo_utilizado: tiempo_utilizado || null })
     });
   }
 
