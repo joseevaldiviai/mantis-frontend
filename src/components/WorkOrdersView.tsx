@@ -36,6 +36,7 @@ export const WorkOrdersView: React.FC<WorkOrdersViewProps> = ({
   const [viewMode, setViewMode] = useState<'kanban' | 'list'>('kanban');
   const [searchTerm, setSearchTerm] = useState('');
   const [priorityFilter, setPriorityFilter] = useState<string>('');
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   // Selected OT for Detail Modal
   const [selectedOT, setSelectedOT] = useState<WorkOrder | null>(null);
@@ -83,7 +84,18 @@ export const WorkOrdersView: React.FC<WorkOrdersViewProps> = ({
     setLoading(true);
     try {
       const data = await api.getWorkOrders({ q: searchTerm, prioridad: priorityFilter });
-      setWorkOrders(data);
+      
+      // Aplicar filtro de visibilidad para técnicos
+      const mostrarOtATodos = localStorage.getItem('mantis_mostrar_ot_a_todos') !== 'false';
+      if (!mostrarOtATodos && currentUser?.rol === 'tecnico') {
+        // Si el técnico no puede ver todas las OT, filtrar solo las asignadas
+        const otAsignadas = data.filter(ot => 
+          ot.colaboradores?.some(c => c.user_id === currentUser.id)
+        );
+        setWorkOrders(otAsignadas);
+      } else {
+        setWorkOrders(data);
+      }
     } catch (e) {
       console.error('Error loading work orders', e);
     } finally {
@@ -100,6 +112,11 @@ export const WorkOrdersView: React.FC<WorkOrdersViewProps> = ({
   }, [isCreateModalOpen]);
 
   useEffect(() => {
+    // Obtener el usuario actual para aplicar filtro de visibilidad
+    api.getMe().then(user => {
+      setCurrentUser(user);
+    }).catch(() => {});
+    
     loadWorkOrders();
     api.getMachines().then(m => {
       setMachines(m);
@@ -499,7 +516,7 @@ export const WorkOrdersView: React.FC<WorkOrdersViewProps> = ({
                   </select>
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-700 mb-1">Tipo de Solicitud *</label>
+                  <label className="block font-semibold text-slate-700 mb-1">Tipo de Solicitud pepe *</label>
                   <select
                     value={newTipoSolicitudId}
                     onChange={(e) => { setNewTipoSolicitudId(Number(e.target.value)); markTouched('tipoSolicitud'); }}

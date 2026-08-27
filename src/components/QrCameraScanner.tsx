@@ -68,9 +68,15 @@ export const QrCameraScanner: React.FC<QrCameraScannerProps> = ({ onScan, isOpen
       await scanner.start(
         { facingMode },
         {
-          fps: 10,
-          qrbox: { width: 250, height: 250 },
+          fps: 15,
+          qrbox: (viewfinderWidth, viewfinderHeight) => {
+            // Use 70% of the smaller dimension for better detection
+            const minDim = Math.min(viewfinderWidth, viewfinderHeight);
+            const size = Math.floor(minDim * 0.7);
+            return { width: size, height: size };
+          },
           aspectRatio: 1.0,
+          disableFlip: false,
         },
         (decodedText) => handleDetected(decodedText),
         () => {}

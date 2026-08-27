@@ -22,10 +22,43 @@ import {
   ChevronRight,
   Shield
 } from 'lucide-react';
-import { Html5Qrcode } from 'html5-qrcode';
+import jsQR from 'jsqr';
 import { QrPublicInfo, WorkOrder } from '../types';
 import { api } from '../services/api';
 import { QrCameraScanner } from './QrCameraScanner';
+
+/** Scan a File for QR codes using jsQR (pure JS, works reliably with images) */
+async function scanImageWithJsQR(file: File): Promise<string | null> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      if (!ctx) { resolve(null); return; }
+
+      // Ensure minimum size for better detection
+      let w = img.width;
+      let h = img.height;
+      const minSize = 300;
+      if (w < minSize || h < minSize) {
+        const scale = minSize / Math.min(w, h);
+        w = Math.floor(w * scale);
+        h = Math.floor(h * scale);
+      }
+
+      canvas.width = w;
+      canvas.height = h;
+      ctx.drawImage(img, 0, 0, w, h);
+
+      const imageData = ctx.getImageData(0, 0, w, h);
+      const code = jsQR(imageData.data, w, h, { inversionAttempts: 'attemptBoth' });
+      URL.revokeObjectURL(img.src);
+      resolve(code?.data ?? null);
+    };
+    img.onerror = () => resolve(null);
+    img.src = URL.createObjectURL(file);
+  });
+}
 
 interface QrScannerViewProps {
   onCreateWorkOrder?: (machineId: number, machineName: string) => void;
@@ -43,17 +76,36 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
   // Extract QR token from a value that could be a full URL or just the code
   const extractQrToken = (raw: string): string => {
     const trimmed = raw.trim();
-    // If it's a URL, extract the last path segment
+    if (!trimmed) return '';
+
+    // If it's a URL, extract the last meaningful path segment
     if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
       try {
         const url = new URL(trimmed);
         const segments = url.pathname.split('/').filter(Boolean);
         const lastSegment = segments[segments.length - 1];
-        if (lastSegment) return lastSegment;
+        if (lastSegment) return decodeURIComponent(lastSegment);
       } catch {}
     }
-    return trimmed;
+
+    // Remove any surrounding quotes or whitespace
+    let token = trimmed.replace(/^["']+|["']+$/g, '').trim();
+
+    // If it contains a URL-like pattern mid-string, try to extract
+    const urlMatch = token.match(/https?:\/\/[^\s]+/);
+    if (urlMatch) {
+      try {
+        const url = new URL(urlMatch[0]);
+        const segments = url.pathname.split('/').filter(Boolean);
+        const lastSegment = segments[segments.length - 1];
+        if (lastSegment) return decodeURIComponent(lastSegment);
+      } catch {}
+    }
+
+    return token;
   };
+
+
 
   const handleSearch = async () => {
     if (!qrCode.trim()) return;
@@ -78,24 +130,32 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
   const handleScanFromImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
     setIsImageScanning(true);
     setError(null);
+
     try {
-      const scanner = new Html5Qrcode('qr-image-scan-region');
-      const result = await scanner.scanFile(file, true);
-      scanner.clear();
+      if (!file.type.startsWith('image/')) {
+        setError(`El archivo no es una imagen válida. Tipo: ${file.type}`);
+        return;
+      }
+
+      const result = await scanImageWithJsQR(file);
+      if (!result) {
+        setError('No se detectó código QR en la imagen. Asegúrate de que el código sea visible y esté bien enfocado.');
+        return;
+      }
+
       const token = extractQrToken(result);
       setQrCode(token);
-      // Auto-search with scanned code
       setQrData(null);
       const data = await api.getPublicQrInfo(token);
       setQrData(data);
       setError(null);
     } catch {
-      setError('No se detectó ningún código QR en la imagen. Intenta con otra foto más clara.');
+      setError('Error al procesar la imagen. Intenta con otra foto.');
     } finally {
       setIsImageScanning(false);
-      // Reset file input so the same file can be re-selected
       if (fileInputRef.current) fileInputRef.current.value = '';
     }
   };
@@ -177,7 +237,13 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
       {error && (
         <div className="glass-panel p-4 rounded-2xl border border-rose-200 bg-rose-50/50 flex items-center gap-3">
           <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0" />
-          <p className="text-xs font-medium text-rose-700">{error}</p>
+          <p className="flex-1 text-xs font-medium text-rose-700">{error}</p>
+          <button
+            onClick={() => setError(null)}
+            className="text-rose-400 hover:text-rose-600 cursor-pointer shrink-0"
+          >
+            <XCircle className="w-4 h-4" />
+          </button>
         </div>
       )}
 
@@ -407,26 +473,26 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
         </div>
       )}
 
-      {/* Hidden region for image-based QR scanning */}
-      <div id="qr-image-scan-region" className="hidden" />
-
       {/* Camera Scanner Modal */}
       <QrCameraScanner
         isOpen={isCameraOpen}
         onClose={() => setIsCameraOpen(false)}
         onScan={(code) => {
-          setQrCode(code);
+          const token = extractQrToken(code);
+          setQrCode(token);
           setIsCameraOpen(false);
           // Auto-search with scanned code
-          setTimeout(() => {
-            setQrCode(code);
-            api.getPublicQrInfo(code).then((data) => {
-              setQrData(data);
-              setError(null);
-            }).catch(() => {
-              setError('No se encontró equipo con ese código QR o no hay conexión con la API.');
-            });
-          }, 100);
+          setLoading(true);
+          setError(null);
+          setQrData(null);
+          api.getPublicQrInfo(token).then((data) => {
+            setQrData(data);
+            setError(null);
+          }).catch(() => {
+            setError(`No se encontró equipo con el código "${token}". Verifica que el QR pertenezca a una máquina registrada.`);
+          }).finally(() => {
+            setLoading(false);
+          });
         }}
       />
 

@@ -183,7 +183,7 @@ export const PreventivePlansView: React.FC = () => {
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-700 mb-1">Tipo de Solicitud *</label>
+                <label className="block font-semibold text-slate-700 mb-1">Tipo de Solicitud jose *</label>
                 <select
                   value={newTipoSolicitudId}
                   onChange={(e) => setNewTipoSolicitudId(Number(e.target.value))}

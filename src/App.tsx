@@ -18,6 +18,14 @@ import { LoginScreen } from './components/LoginScreen';
 import { api } from './services/api';
 import { User, Company, NotificationItem } from './types';
 
+// Pestañas permitidas por rol
+const allowedTabsByRole: Record<string, string[]> = {
+  super_admin: ['dashboard', 'inventario', 'ordenes', 'maquinas', 'planes', 'compras', 'catalogos', 'usuarios', 'rag', 'qr'],
+  administrador: ['dashboard', 'inventario', 'ordenes', 'maquinas', 'planes', 'compras', 'catalogos', 'usuarios', 'rag', 'qr'],
+  tecnico: ['ordenes', 'maquinas', 'planes', 'rag', 'qr'],
+  produccion: ['dashboard', 'inventario', 'ordenes', 'maquinas', 'planes', 'compras', 'rag', 'qr'],
+};
+
 export default function App() {
   const [activeTab, setActiveTab] = useState<string>('dashboard');
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(api.isAuthenticated());
@@ -62,6 +70,18 @@ export default function App() {
       setIsAuthenticated(false);
     }
   }, [refreshKey]);
+
+  // Función segura para cambiar de pestaña con validación de permisos
+  const safeSetActiveTab = (tab: string) => {
+    const role = currentUser?.rol || 'tecnico';
+    const allowed = allowedTabsByRole[role] || allowedTabsByRole.tecnico;
+    if (allowed.includes(tab)) {
+      setActiveTab(tab);
+    } else {
+      // Redirigir a órdenes de trabajo si no tiene permisos
+      setActiveTab('ordenes');
+    }
+  };
 
   const handleCreateWorkOrderClick = () => {
     setActiveTab('ordenes');
@@ -114,7 +134,7 @@ export default function App() {
         company={currentCompany}
         user={currentUser}
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={safeSetActiveTab}
         unreadNotifications={unreadNotifications}
         onOpenNotifications={() => {
           setIsNotificationsOpen(true);
@@ -140,10 +160,10 @@ export default function App() {
           {activeTab === 'dashboard' && (
             <DashboardView
               key={`dash-${refreshKey}`}
-              onNavigateTab={setActiveTab}
+              onNavigateTab={safeSetActiveTab}
               onOpenNewOT={handleCreateWorkOrderClick}
               onOpenNewSparePart={() => {
-                setActiveTab('inventario');
+                safeSetActiveTab('inventario');
                 setIsCreateSparePartOpen(true);
               }}
               onOpenPublicQrReport={() => setIsQrReportOpen(true)}
@@ -198,7 +218,7 @@ export default function App() {
           {activeTab === 'qr' && (
             <QrScannerView
               onCreateWorkOrder={(machineId, machineName) => {
-                setActiveTab('ordenes');
+                safeSetActiveTab('ordenes');
                 setIsCreateOtOpen(true);
               }}
             />
@@ -213,12 +233,14 @@ export default function App() {
           <p className="font-semibold text-slate-800">
             Mantis CMMS &copy; {new Date().getFullYear()} — Plataforma de Gestión de Mantenimiento e Inventario Industrial
           </p>
-          <button
-            onClick={() => setIsApiConfigOpen(true)}
-            className="text-slate-600 hover:text-slate-900 underline font-medium cursor-pointer text-[11px]"
-          >
-            Configurar Conexión Laravel Sanctum
-          </button>
+          {currentUser?.rol !== 'tecnico' && (
+            <button
+              onClick={() => setIsApiConfigOpen(true)}
+              className="text-slate-600 hover:text-slate-900 underline font-medium cursor-pointer text-[11px]"
+            >
+              Configurar Conexión Laravel Sanctum
+            </button>
+          )}
         </div>
       </footer>
 
