@@ -336,7 +336,14 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
         color: '#0ea5e9',
         contenido: (
           <div>
-            <span className="font-bold text-sm">{c.usuario?.nombre || 'Usuario'}</span>
+            <div className="flex items-center justify-between gap-2">
+              <span className="font-bold text-sm">{c.usuario ? `${c.usuario.nombre} ${c.usuario.apellido}` : 'Usuario'}</span>
+              {c.tiempo_utilizado != null && c.tiempo_utilizado > 0 && (
+                <span className="text-[10px] font-bold text-[#165B62] bg-[#D9EDEE] px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
+                  <Clock className="w-2.5 h-2.5" /> {formatMinutesToTime(c.tiempo_utilizado)}
+                </span>
+              )}
+            </div>
             <p className="text-xs text-slate-600 mt-0.5">{c.mensaje.length > 120 ? c.mensaje.substring(0, 120) + '...' : c.mensaje}</p>
           </div>
         )
@@ -891,7 +898,12 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
                   (workOrder.comentarios || []).map(c => (
                     <div key={c.id} className="p-3 bg-white/40 rounded-2xl border border-white/60">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="font-bold text-slate-800 text-[13px]">{c.usuario?.nombre || 'Técnico'}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-slate-800 text-[13px]">{c.usuario ? `${c.usuario.nombre} ${c.usuario.apellido}` : 'Técnico'}</span>
+                          {c.usuario?.rol && (
+                            <span className="text-[10px] text-slate-400 bg-white/60 px-1.5 py-0.5 rounded-full">{c.usuario.rol}</span>
+                          )}
+                        </div>
                         <div className="flex items-center gap-2">
                           {c.tiempo_utilizado != null && c.tiempo_utilizado > 0 && (
                             <span className="text-[11px] font-bold text-[#165B62] bg-[#D9EDEE] px-2 py-0.5 rounded-full flex items-center gap-1">

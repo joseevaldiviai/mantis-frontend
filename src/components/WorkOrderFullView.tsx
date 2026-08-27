@@ -469,7 +469,14 @@ export const WorkOrderFullView: React.FC<WorkOrderFullViewProps> = ({ workOrderI
                   <div key={`com-${i}`} className="relative pb-4">
                     <div className="absolute left-[-13px] top-0.5 w-3 h-3 rounded-full bg-sky-400 border-2 border-white shadow-sm" />
                     <div className="text-xs">
-                      <p className="font-bold text-slate-800">Comentario de {c.usuario?.nombre || 'Técnico'}</p>
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="font-bold text-slate-800">Comentario de {c.usuario ? `${c.usuario.nombre} ${c.usuario.apellido}` : 'Técnico'}</p>
+                        {c.tiempo_utilizado != null && c.tiempo_utilizado > 0 && (
+                          <span className="text-[10px] font-bold text-[#165B62] bg-[#D9EDEE] px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
+                            <Clock className="w-2.5 h-2.5" /> {formatMinutesToTime(c.tiempo_utilizado)}
+                          </span>
+                        )}
+                      </div>
                       <p className="text-slate-600 text-[12px] mt-0.5">{c.mensaje.slice(0, 120)}{c.mensaje.length > 120 ? '...' : ''}</p>
                       <p className="text-slate-400 text-[12px] mt-0.5">{new Date(c.created_at).toLocaleString('es-ES')}</p>
                     </div>
@@ -595,7 +602,12 @@ export const WorkOrderFullView: React.FC<WorkOrderFullViewProps> = ({ workOrderI
               {(workOrder.comentarios || []).length === 0 ? <p className="text-slate-400 text-xs italic text-center py-8">Sin comentarios.</p> : (workOrder.comentarios || []).map(c => (
                 <div key={c.id} className="p-4 bg-white/40 rounded-2xl border border-white/60">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="font-bold text-slate-800 text-sm">{c.usuario?.nombre || 'Técnico'}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-slate-800 text-sm">{c.usuario ? `${c.usuario.nombre} ${c.usuario.apellido}` : 'Técnico'}</span>
+                      {c.usuario?.rol && (
+                        <span className="text-[10px] text-slate-400 bg-white/60 px-1.5 py-0.5 rounded-full">{c.usuario.rol}</span>
+                      )}
+                    </div>
                     <div className="flex items-center gap-2">
                       {c.tiempo_utilizado != null && c.tiempo_utilizado > 0 && (
                         <span className="text-[11px] font-bold text-[#165B62] bg-[#D9EDEE] px-2 py-0.5 rounded-full flex items-center gap-1">
