@@ -25,4 +25,17 @@ export class MaintenanceApi {
       body: JSON.stringify(data)
     });
   }
+
+  public async updateMaintenancePlan(id: number, data: Partial<MaintenancePlan>): Promise<MaintenancePlan> {
+    return this.client.request<MaintenancePlan>(`/planes-mantenimiento/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data)
+    });
+  }
+
+  public async deleteMaintenancePlan(id: number): Promise<void> {
+    await this.client.request<void>(`/planes-mantenimiento/${id}`, {
+      method: 'DELETE'
+    });
+  }
 }

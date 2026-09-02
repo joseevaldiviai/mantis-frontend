@@ -221,7 +221,7 @@ export const CatalogsView: React.FC = () => {
     <div className="space-y-6">
       
       {/* Top Banner */}
-      <div className="glass-panel p-6 rounded-3xl shadow-sm">
+      <div className="glass-panel p-6 rounded-xl shadow-sm">
         <h1 className="text-[18px] font-extrabold text-slate-800 flex items-center gap-2">
           <Layers className="w-6 h-6 text-[#165B62]" />
           Catálogos del Sistema, Roles & Sesiones Sanctum
@@ -232,7 +232,7 @@ export const CatalogsView: React.FC = () => {
       </div>
 
       {loading ? (
-        <div className="py-12 text-center text-slate-500 glass-panel rounded-3xl p-8">
+        <div className="py-12 text-center text-slate-500 glass-panel rounded-xl p-8">
           <RefreshCw className="w-6 h-6 text-[#165B62] animate-spin mx-auto mb-2" />
           <p className="text-[13px] font-medium">Cargando catálogos del sistema...</p>
         </div>
@@ -240,7 +240,7 @@ export const CatalogsView: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           
           {/* Categories */}
-          <div className="glass-card p-5 rounded-2xl space-y-3">
+          <div className="glass-card p-5 rounded-lg space-y-3">
             <h2 className="font-bold text-[14px] text-slate-800 flex items-center gap-2">
               <Tag className="w-4 h-4 text-[#165B62]" /> Categorías de Mantenimiento
             </h2>
@@ -272,7 +272,7 @@ export const CatalogsView: React.FC = () => {
           </div>
 
           {/* Request Types */}
-          <div className="glass-card p-5 rounded-2xl space-y-3">
+          <div className="glass-card p-5 rounded-lg space-y-3">
             <h2 className="font-bold text-[14px] text-slate-800 flex items-center gap-2">
               <Shield className="w-4 h-4 text-[#165B62]" /> Tipos de Solicitud de Falla
             </h2>
@@ -302,7 +302,7 @@ export const CatalogsView: React.FC = () => {
           </div>
 
           {/* User Specialties */}
-          <div className="glass-card p-5 rounded-2xl space-y-3">
+          <div className="glass-card p-5 rounded-lg space-y-3">
             <h2 className="font-bold text-[14px] text-slate-800 flex items-center gap-2">
               <UserCheck className="w-4 h-4 text-[#165B62]" /> Especialidades Técnicas
             </h2>
@@ -332,7 +332,7 @@ export const CatalogsView: React.FC = () => {
           </div>
 
           {/* Estados OT */}
-          <div className="glass-card p-5 rounded-2xl space-y-3">
+          <div className="glass-card p-5 rounded-lg space-y-3">
             <div className="flex items-center justify-between">
               <h2 className="font-bold text-[14px] text-slate-800 flex items-center gap-2">
                 <Palette className="w-4 h-4 text-[#165B62]" /> Estados de Orden de Trabajo
@@ -480,7 +480,7 @@ export const CatalogsView: React.FC = () => {
           </div>
 
           {/* Session Tokens */}
-          <div className="glass-card p-5 rounded-2xl space-y-3 md:col-span-2">
+          <div className="glass-card p-5 rounded-lg space-y-3 md:col-span-2">
             <h2 className="font-bold text-[14px] text-slate-800 flex items-center gap-2">
               <Key className="w-4 h-4 text-[#165B62]" /> Sesiones y Tokens Sanctum
             </h2>
@@ -506,7 +506,7 @@ export const CatalogsView: React.FC = () => {
 
       {/* Configuración de Visibilidad de OT */}
       {isAdmin && (
-        <div className="glass-card p-5 rounded-2xl space-y-3">
+        <div className="glass-card p-5 rounded-lg space-y-3">
           <h2 className="font-bold text-[14px] text-slate-800 flex items-center gap-2">
             <Settings className="w-4 h-4 text-[#165B62]" /> Configuración de Visibilidad de OT
           </h2>

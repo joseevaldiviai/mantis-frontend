@@ -11,7 +11,6 @@ import {
   Layers,
   ArrowUpRight,
   ShieldCheck,
-  Plus,
   FileSpreadsheet,
   QrCode,
   Activity,
@@ -27,14 +26,12 @@ import { WorkerDetailPanel } from './WorkerDetailPanel';
 
 interface DashboardViewProps {
   onNavigateTab: (tab: string) => void;
-  onOpenNewOT: () => void;
   onOpenNewSparePart: () => void;
   onOpenPublicQrReport: () => void;
 }
 
 export const DashboardView: React.FC<DashboardViewProps> = ({
   onNavigateTab,
-  onOpenNewOT,
   onOpenNewSparePart,
   onOpenPublicQrReport
 }) => {
@@ -204,7 +201,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
     <div className="space-y-6">
       
       {/* Top Banner & Filter Controls */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 glass-panel p-5 rounded-3xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 glass-panel p-5 rounded-xl">
         <div>
           <h1 className="text-xl font-extrabold text-slate-800 flex items-center gap-2">
             Dashboard Principal de Mantenimiento e Inventario
@@ -233,19 +230,13 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             />
           </div>
 
-          <button
-            onClick={onOpenNewOT}
-            className="flex items-center gap-1.5 px-4 py-1.5 bg-[#3D848C] hover:bg-[#165B62] text-slate-900 hover:text-white rounded-xl text-xs font-bold shadow-xs transition-all cursor-pointer"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Crear OT</span>
-          </button>
+
         </div>
       </div>
 
       {/* Low Stock Alert Banner (If Any) */}
       {inventario.repuestos_bajo_stock > 0 && (
-        <div className="p-4 glass-card bg-amber-50/60 border-amber-200/80 rounded-2xl flex items-center justify-between gap-4">
+        <div className="p-4 glass-card bg-amber-50/60 border-amber-200/80 rounded-lg flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-amber-100 text-amber-800 rounded-xl shrink-0">
               <AlertTriangle className="w-5 h-5 text-amber-700" />
@@ -282,7 +273,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         {/* Card 1: Backlog OTs */}
         <div
           onClick={() => onNavigateTab('ordenes')}
-          className="cursor-pointer glass-card glass-card-hover p-5 rounded-2xl group"
+          className="cursor-pointer glass-card glass-card-hover p-5 rounded-lg group"
         >
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
@@ -306,7 +297,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         {/* Card 2: Total Costs */}
         <div
           onClick={() => onNavigateTab('inventario')}
-          className="cursor-pointer glass-card glass-card-hover p-5 rounded-2xl group"
+          className="cursor-pointer glass-card glass-card-hover p-5 rounded-lg group"
         >
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
@@ -329,7 +320,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         {/* Card 3: Downtime & MTTR */}
         <div
           onClick={() => onNavigateTab('maquinas')}
-          className="cursor-pointer glass-card glass-card-hover p-5 rounded-2xl group"
+          className="cursor-pointer glass-card glass-card-hover p-5 rounded-lg group"
         >
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
@@ -351,7 +342,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         {/* Card 4: Inventory Health */}
         <div
           onClick={() => onNavigateTab('inventario')}
-          className="cursor-pointer glass-card glass-card-hover p-5 rounded-2xl group"
+          className="cursor-pointer glass-card glass-card-hover p-5 rounded-lg group"
         >
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
@@ -380,7 +371,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="lg:col-span-2 space-y-6">
           
           {/* Work Orders Breakdown by Status & Priority */}
-          <div className="glass-card p-5 rounded-3xl">
+          <div className="glass-card p-5 rounded-xl">
             <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/60">
               <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
                 <BarChart3 className="w-4 h-4 text-[#165B62]" />
@@ -440,7 +431,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             
             {/* Preventive Maintenance Progress */}
-            <div className="glass-card p-5 rounded-3xl flex flex-col justify-between">
+            <div className="glass-card p-5 rounded-xl flex flex-col justify-between">
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <ShieldCheck className="w-4 h-4 text-[#165B62]" />
@@ -465,7 +456,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </div>
 
             {/* Quick Actions Shortcuts */}
-            <div className="bg-gradient-to-br from-[#165B62] to-[#0F434A] p-5 rounded-3xl text-white shadow-md flex flex-col justify-between border border-white/30">
+            <div className="bg-gradient-to-br from-[#165B62] to-[#0F434A] p-5 rounded-xl text-white shadow-md flex flex-col justify-between border border-white/30">
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-wider text-emerald-100">Accesos Rápidos</h3>
                 <p className="text-xs text-white/80 mt-1">Gestión directa de terreno e inventario</p>
@@ -499,7 +490,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         {/* Right Col: Top Machines Rankings */}
         <div className="space-y-6">
           {/* Top Machines by Cost */}
-          <div className="glass-card p-5 rounded-3xl">
+          <div className="glass-card p-5 rounded-xl">
             <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/60">
               <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
                 <DollarSign className="w-4 h-4 text-[#165B62]" />
@@ -547,7 +538,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
 
           {/* Top Machines by Downtime */}
-          <div className="glass-card p-5 rounded-3xl">
+          <div className="glass-card p-5 rounded-xl">
             <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/60">
               <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
                 <Clock className="w-4 h-4 text-rose-600" />
@@ -596,7 +587,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
 
           {/* Top Machines by Failures */}
-          <div className="glass-card p-5 rounded-3xl">
+          <div className="glass-card p-5 rounded-xl">
             <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/60">
               <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 text-amber-600" />
@@ -648,7 +639,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
       {/* Sección: Horas Registradas por Mantenimiento */}
       {(otHoursData.length > 0 || userHoursData.length > 0) && (
-        <div className="glass-card p-5 rounded-3xl">
+        <div className="glass-card p-5 rounded-xl">
           <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/60">
             <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
               <Clock className="w-4 h-4 text-[#165B62]" />
@@ -659,19 +650,19 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
           {/* Comparativa Mes Actual vs Anterior */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
-            <div className="p-3 bg-white/40 rounded-2xl border border-white/60 text-center">
+            <div className="p-3 bg-white/40 rounded-lg border border-white/60 text-center">
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Mes Anterior</p>
               <p className="text-lg font-extrabold text-slate-800 mt-1">{formatMinutesToTime(periodComparison.prevTotalMinutes)}</p>
               <p className="text-[10px] text-slate-400 mt-0.5">{periodComparison.prevCommentsCount} registros</p>
               <p className="text-[10px] text-slate-400">{periodComparison.prevMonthLabel}</p>
             </div>
-            <div className="p-3 bg-white/40 rounded-2xl border border-white/60 text-center">
+            <div className="p-3 bg-white/40 rounded-lg border border-white/60 text-center">
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Mes Actual</p>
               <p className="text-lg font-extrabold text-[#0F434A] mt-1">{formatMinutesToTime(periodComparison.currentTotalMinutes)}</p>
               <p className="text-[10px] text-slate-400 mt-0.5">{periodComparison.currentCommentsCount} registros</p>
               <p className="text-[10px] text-slate-400">{periodComparison.currentMonthLabel}</p>
             </div>
-            <div className="p-3 bg-white/40 rounded-2xl border border-white/60 text-center flex flex-col justify-center">
+            <div className="p-3 bg-white/40 rounded-lg border border-white/60 text-center flex flex-col justify-center">
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Variación</p>
               <div className="flex items-center justify-center gap-1.5 mt-1">
                 <span className={`text-lg font-extrabold ${periodComparison.pctChange > 0 ? 'text-emerald-600' : periodComparison.pctChange < 0 ? 'text-rose-600' : 'text-slate-600'}`}>
@@ -768,7 +759,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
       {/* Gráfico de Tendencia de Horas */}
       {trendData.length > 0 && (
-        <div className="glass-card p-5 rounded-3xl">
+        <div className="glass-card p-5 rounded-xl">
           <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/60">
             <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-[#165B62]" />
@@ -959,7 +950,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="space-y-4">
           <button
             onClick={() => setShowWorkers(!showWorkers)}
-            className="w-full glass-card p-4 rounded-2xl flex items-center justify-between hover:bg-white/20 transition-colors cursor-pointer"
+            className="w-full glass-card p-4 rounded-lg flex items-center justify-between hover:bg-white/20 transition-colors cursor-pointer"
           >
             <div className="flex items-center gap-3">
               <div className="p-2 bg-[#D9EDEE] text-[#0F434A] rounded-xl">

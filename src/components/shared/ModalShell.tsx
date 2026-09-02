@@ -24,7 +24,7 @@ export const ModalShell: React.FC<ModalShellProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm p-4 overflow-y-auto">
-      <div className={`glass-modal rounded-3xl ${maxWidth} w-full p-6 shadow-2xl my-8`}>
+      <div className={`glass-modal rounded-xl ${maxWidth} w-full p-6 shadow-2xl my-8`}>
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-white/60">
           <div className="flex items-center gap-2">

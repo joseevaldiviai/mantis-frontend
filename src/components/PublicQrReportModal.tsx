@@ -74,7 +74,7 @@ export const PublicQrReportModal: React.FC<PublicQrReportModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/40 backdrop-blur-xs p-4">
-      <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-emerald-100 max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-lg max-w-lg w-full p-6 shadow-2xl border border-emerald-100 max-h-[90vh] overflow-y-auto">
         
         <div className="flex items-center justify-between pb-4 border-b border-stone-100">
           <div className="flex items-center gap-2">

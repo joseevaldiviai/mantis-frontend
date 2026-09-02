@@ -24,13 +24,24 @@ interface InventoryViewProps {
 }
 
 export const InventoryView: React.FC<InventoryViewProps> = ({
-  isCreateModalOpen,
+  isCreateModalOpen: isCreateModalOpenProp,
   onCloseCreateModal
 }) => {
   const [parts, setParts] = useState<SparePart[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterLowStockOnly, setFilterLowStockOnly] = useState(false);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(isCreateModalOpenProp);
+
+  // Sync with prop changes (e.g. from Dashboard)
+  useEffect(() => {
+    setIsCreateModalOpen(isCreateModalOpenProp);
+  }, [isCreateModalOpenProp]);
+
+  const handleCloseCreateModal = () => {
+    setIsCreateModalOpen(false);
+    onCloseCreateModal();
+  };
 
   // Edit Modal State
   const [editingPart, setEditingPart] = useState<SparePart | null>(null);
@@ -85,7 +96,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
       setNewCodigo('');
       setNewNombre('');
       setNewDescripcion('');
-      onCloseCreateModal();
+      handleCloseCreateModal();
       loadParts();
     } catch (err: any) {
       alert(`Error al crear repuesto: ${err.message}`);
@@ -159,7 +170,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
     <div className="space-y-6">
       
       {/* Top Title & Summary */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-5 rounded-3xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-5 rounded-xl">
         <div>
           <h1 className="text-xl font-extrabold text-slate-800 flex items-center gap-2">
             <Package className="w-6 h-6 text-[#165B62]" />
@@ -184,7 +195,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
               setNewCodigo(`REP-${Math.floor(1000 + Math.random() * 9000)}`);
               setNewNombre('');
               setNewDescripcion('');
-              onCloseCreateModal(); // toggle trigger
+              setIsCreateModalOpen(true);
             }}
             className="flex items-center gap-1.5 px-3.5 py-2 bg-[#3D848C] hover:bg-[#165B62] text-slate-900 hover:text-white rounded-xl text-xs font-bold shadow-xs transition-all cursor-pointer"
           >
@@ -196,7 +207,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
 
       {/* Metrics Header */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="glass-card p-4 rounded-2xl flex items-center gap-3">
+        <div className="glass-card p-4 rounded-lg flex items-center gap-3">
           <div className="p-3 bg-[#D9EDEE] text-[#0F434A] rounded-xl border border-[#3D848C]/50">
             <Package className="w-5 h-5" />
           </div>
@@ -206,7 +217,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
           </div>
         </div>
 
-        <div className={`p-4 rounded-2xl glass-card flex items-center gap-3 ${
+        <div className={`p-4 rounded-lg glass-card flex items-center gap-3 ${
           lowStockCount > 0 ? 'bg-amber-50/70 border-amber-200/80' : ''
         }`}>
           <div className={`p-3 rounded-xl ${lowStockCount > 0 ? 'bg-amber-100 text-amber-800' : 'bg-[#D9EDEE] text-[#0F434A]'}`}>
@@ -218,7 +229,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
           </div>
         </div>
 
-        <div className="glass-card p-4 rounded-2xl flex items-center gap-3">
+        <div className="glass-card p-4 rounded-lg flex items-center gap-3">
           <div className="p-3 bg-[#D9EDEE] text-[#0F434A] rounded-xl border border-[#3D848C]/50">
             <TrendingDown className="w-5 h-5" />
           </div>
@@ -230,7 +241,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
       </div>
 
       {/* Search & Filters */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 glass-card p-4 rounded-2xl">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 glass-card p-4 rounded-lg">
         <div className="relative w-full sm:w-80">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
           <input
@@ -258,7 +269,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
       </div>
 
       {/* Inventory Table */}
-      <div className="glass-card rounded-3xl overflow-hidden">
+      <div className="glass-card rounded-xl overflow-hidden">
         {loading ? (
           <div className="py-12 text-center text-slate-500">
             <RefreshCw className="w-6 h-6 text-[#165B62] animate-spin mx-auto mb-2" />
@@ -369,7 +380,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
       {/* Quick Stock Adjustment Modal */}
       {adjustPart && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm p-4">
-          <div className="glass-modal rounded-3xl max-w-sm w-full p-5 shadow-2xl">
+          <div className="glass-modal rounded-xl max-w-sm w-full p-5 shadow-2xl">
             <div className="flex items-center justify-between pb-3 border-b border-white/60">
               <h3 className="font-bold text-sm text-slate-800">Ajuste Rápido de Stock</h3>
               <button onClick={() => setAdjustPart(null)} className="p-1 text-slate-400 hover:text-slate-700 cursor-pointer">
@@ -439,7 +450,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
       {/* Edit Part Modal */}
       {editingPart && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm p-4">
-          <div className="glass-modal rounded-3xl max-w-md w-full p-6 shadow-2xl">
+          <div className="glass-modal rounded-xl max-w-md w-full p-6 shadow-2xl">
             <div className="flex items-center justify-between pb-3 border-b border-white/60">
               <h3 className="font-bold text-base text-slate-800">Editar Insumo / Repuesto</h3>
               <button onClick={() => setEditingPart(null)} className="p-1 text-slate-400 hover:text-slate-700 cursor-pointer">
@@ -548,10 +559,10 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
       {/* Inline Create Modal Triggered by prop or header */}
       {isCreateModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm p-4">
-          <div className="glass-modal rounded-3xl max-w-md w-full p-6 shadow-2xl">
+          <div className="glass-modal rounded-xl max-w-md w-full p-6 shadow-2xl">
             <div className="flex items-center justify-between pb-3 border-b border-white/60">
               <h3 className="font-bold text-base text-slate-800">Registrar Nuevo Repuesto / Insumo</h3>
-              <button onClick={onCloseCreateModal} className="p-1 text-slate-400 hover:text-slate-700 cursor-pointer">
+              <button onClick={handleCloseCreateModal} className="p-1 text-slate-400 hover:text-slate-700 cursor-pointer">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -646,7 +657,7 @@ export const InventoryView: React.FC<InventoryViewProps> = ({
               <div className="flex items-center justify-end gap-2 pt-3 border-t border-white/60">
                 <button
                   type="button"
-                  onClick={onCloseCreateModal}
+                  onClick={handleCloseCreateModal}
                   className="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-white/60 rounded-xl cursor-pointer"
                 >
                   Cancelar

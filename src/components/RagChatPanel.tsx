@@ -140,7 +140,7 @@ export const RagChatPanel: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-full glass-panel rounded-2xl overflow-hidden border border-white/60 shadow-sm">
+    <div className="flex flex-col h-full glass-panel rounded-lg overflow-hidden border border-white/60 shadow-sm">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-white/40 flex-shrink-0">
         <div className="flex items-center gap-2.5">
@@ -208,7 +208,7 @@ export const RagChatPanel: React.FC = () => {
             )}
 
             <div
-              className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed ${
+              className={`max-w-[85%] rounded-lg px-3.5 py-2.5 text-xs leading-relaxed ${
                 msg.role === 'user'
                   ? 'bg-[#3D848C] text-white rounded-br-md'
                   : msg.role === 'system'
@@ -250,7 +250,7 @@ export const RagChatPanel: React.FC = () => {
             <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#3D848C] to-[#165B62] flex items-center justify-center flex-shrink-0 shadow-sm">
               <Bot className="w-3.5 h-3.5 text-white" />
             </div>
-            <div className="glass-card rounded-2xl rounded-bl-md px-4 py-3 flex items-center gap-2">
+            <div className="glass-card rounded-lg rounded-bl-md px-4 py-3 flex items-center gap-2">
               <Loader2 className="w-3.5 h-3.5 text-[#3D848C] animate-spin" />
               <span className="text-xs text-slate-500">Buscando en la base de conocimiento...</span>
             </div>

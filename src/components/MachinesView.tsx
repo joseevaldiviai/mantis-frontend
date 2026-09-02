@@ -81,7 +81,7 @@ export const MachinesView: React.FC = () => {
     <div className="space-y-6">
       
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 rounded-3xl shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 rounded-xl shadow-sm">
         <div>
           <h1 className="text-xl font-extrabold text-slate-800 flex items-center gap-2">
             <Wrench className="w-6 h-6 text-[#165B62]" />
@@ -105,7 +105,7 @@ export const MachinesView: React.FC = () => {
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 glass-panel p-4 rounded-2xl">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 glass-panel p-4 rounded-lg">
         <div className="relative w-full sm:w-80">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
           <input
@@ -134,12 +134,12 @@ export const MachinesView: React.FC = () => {
 
       {/* Machines Grid */}
       {loading ? (
-        <div className="py-12 text-center text-slate-500 glass-panel rounded-3xl p-8">
+        <div className="py-12 text-center text-slate-500 glass-panel rounded-xl p-8">
           <RefreshCw className="w-6 h-6 text-[#165B62] animate-spin mx-auto mb-2" />
           <p className="text-xs font-medium">Cargando catálogo de máquinas...</p>
         </div>
       ) : machines.length === 0 ? (
-        <div className="py-12 text-center text-slate-400 glass-panel rounded-3xl p-8">
+        <div className="py-12 text-center text-slate-400 glass-panel rounded-xl p-8">
           <Wrench className="w-8 h-8 text-slate-300 mx-auto mb-2" />
           <p className="text-sm font-semibold text-slate-700">No hay máquinas registradas en esta área</p>
         </div>
@@ -149,7 +149,7 @@ export const MachinesView: React.FC = () => {
             <div
               key={m.id}
               onClick={() => setSelectedMachine(m)}
-              className="glass-card p-5 rounded-2xl hover:border-[#3D848C] cursor-pointer transition-all flex flex-col justify-between group space-y-3"
+              className="glass-card p-5 rounded-lg hover:border-[#3D848C] cursor-pointer transition-all flex flex-col justify-between group space-y-3"
             >
               <div>
                 <div className="flex items-center justify-between mb-2">
@@ -191,7 +191,7 @@ export const MachinesView: React.FC = () => {
       {/* Create Machine Modal */}
       {isCreateOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm p-4">
-          <div className="glass-modal rounded-3xl max-w-md w-full p-6 shadow-2xl">
+          <div className="glass-modal rounded-xl max-w-md w-full p-6 shadow-2xl">
             <div className="flex items-center justify-between pb-3 border-b border-white/60">
               <h3 className="font-bold text-base text-slate-800">Dar de Alta Nuevo Equipo</h3>
               <button onClick={() => setIsCreateOpen(false)} className="p-1 text-slate-400 hover:text-slate-700 cursor-pointer">

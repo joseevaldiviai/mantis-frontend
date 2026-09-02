@@ -178,7 +178,6 @@ export default function App() {
             <DashboardView
               key={`dash-${refreshKey}`}
               onNavigateTab={safeSetActiveTab}
-              onOpenNewOT={handleCreateWorkOrderClick}
               onOpenNewSparePart={() => {
                 safeSetActiveTab('inventario');
                 setIsCreateSparePartOpen(true);

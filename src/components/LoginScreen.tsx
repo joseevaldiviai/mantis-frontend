@@ -27,8 +27,8 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
   onOpenApiConfig,
   onOpenQrReport
 }) => {
-  const [email, setEmail] = useState('admin@mantis-cmms.com');
-  const [password, setPassword] = useState('123456');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -63,7 +63,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
   return (
     <div className="min-h-screen w-full flex items-center justify-center p-4 bg-gradient-to-br from-stone-100 via-emerald-50/40 to-stone-200 selection:bg-[#3D848C] selection:text-slate-900">
       
-      <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-12 glass-panel rounded-3xl overflow-hidden shadow-2xl border border-white/80">
+      <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-12 glass-panel rounded-xl overflow-hidden shadow-2xl border border-white/80">
         
         {/* Left Side: Brand & Visual Banner */}
         <div className="lg:col-span-5 p-8 bg-gradient-to-br from-slate-900 via-slate-800 to-stone-900 text-white flex flex-col justify-between relative overflow-hidden">
@@ -77,11 +77,10 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
               <img
                 src="/logo-icon.png"
                 alt="Mantis Intelligence System"
-                className="w-10 h-10 rounded-2xl bg-white shadow-md object-contain p-1"
+                className="w-10 h-10 rounded-lg bg-white shadow-md object-contain p-1"
               />
               <div>
                 <span className="text-xl font-black tracking-tight text-white block leading-tight">MANTIS</span>
-                <span className="text-[11px] tracking-widest text-[#3D848C] font-bold uppercase block">Intelligence System · CMMS</span>
               </div>
             </div>
 
@@ -90,37 +89,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
             </p>
           </div>
 
-          {/* Features Highlights */}
-          <div className="relative z-10 space-y-3 my-8 text-xs text-slate-300">
-            <div className="flex items-center gap-2.5">
-              <div className="w-6 h-6 rounded-lg bg-white/10 flex items-center justify-center text-[#3D848C]">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-              </div>
-              <span>Autenticación Tokens Sanctum Bearer</span>
-            </div>
-
-            <div className="flex items-center gap-2.5">
-              <div className="w-6 h-6 rounded-lg bg-white/10 flex items-center justify-center text-[#3D848C]">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-              </div>
-              <span>Control Multi-Tenant por Planta & Empresa</span>
-            </div>
-
-            <div className="flex items-center gap-2.5">
-              <div className="w-6 h-6 rounded-lg bg-white/10 flex items-center justify-center text-[#3D848C]">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-              </div>
-              <span>Reportes de Falla Terreno mediante Código QR</span>
-            </div>
-          </div>
-
-          {/* Bottom Info / Version */}
-          <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-[12px] text-slate-400">
-            <span>Versión 2.5 CMMS</span>
-            <span className="px-2 py-0.5 rounded-full bg-white/10 text-slate-300 font-mono text-[11px]">
-              API Live Laravel
-            </span>
-          </div>
         </div>
 
         {/* Right Side: Login Form & Quick Demo Buttons */}
@@ -132,20 +100,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
                 <h2 className="text-xl font-extrabold text-slate-800">Iniciar Sesión</h2>
                 <p className="text-xs text-slate-500 mt-0.5">Ingresa tus credenciales de usuario</p>
               </div>
-
-              <button
-                type="button"
-                onClick={onOpenApiConfig}
-                className="p-2 text-slate-500 hover:text-slate-800 bg-white/80 hover:bg-white rounded-xl border border-white shadow-2xs transition-all cursor-pointer"
-                title="Configuración de Conexión Laravel API / Sanctum"
-              >
-                <Settings className="w-4 h-4" />
-              </button>
             </div>
 
             {/* Error Alert */}
             {error && (
-              <div className="mb-4 p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-start gap-2 animate-fadeIn">
+              <div className="mb-4 p-3.5 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-start gap-2 animate-fadeIn">
                 <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
                 <span>{error}</span>
               </div>
@@ -214,19 +173,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
             </form>
 
 
-          </div>
-
-          {/* Footer QR Quick Action */}
-          <div className="mt-6 pt-4 border-t border-slate-200/60 flex items-center justify-between text-xs text-slate-500">
-            <span>¿Eres técnico en terreno?</span>
-            <button
-              type="button"
-              onClick={onOpenQrReport}
-              className="text-[#0F434A] font-bold hover:underline flex items-center gap-1 cursor-pointer"
-            >
-              <QrCode className="w-3.5 h-3.5 text-[#165B62]" />
-              <span>Reportar Falla por QR Sin Login</span>
-            </button>
           </div>
 
         </div>

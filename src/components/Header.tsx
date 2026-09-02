@@ -164,7 +164,7 @@ export const Header: React.FC<HeaderProps> = ({
             <img
               src="/logo-icon.png"
               alt="Mantis Intelligence System"
-              className="w-10 h-10 rounded-2xl bg-white shadow-sm border border-white/60 object-contain p-1"
+              className="w-10 h-10 rounded-lg bg-white shadow-sm border border-white/60 object-contain p-1"
             />
             <div>
               <div className="flex items-center gap-2">

@@ -115,7 +115,7 @@ export const PurchasesVendorsView: React.FC = () => {
     <div className="space-y-6">
       
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 rounded-3xl shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-6 rounded-xl shadow-sm">
         <div>
           <h1 className="text-xl font-extrabold text-slate-800 flex items-center gap-2">
             <ShoppingCart className="w-6 h-6 text-[#165B62]" />
@@ -167,7 +167,7 @@ export const PurchasesVendorsView: React.FC = () => {
       </div>
 
       {loading ? (
-        <div className="py-12 text-center text-slate-500 glass-panel rounded-3xl p-8">
+        <div className="py-12 text-center text-slate-500 glass-panel rounded-xl p-8">
           <RefreshCw className="w-6 h-6 text-[#165B62] animate-spin mx-auto mb-2" />
           <p className="text-xs font-medium">Cargando módulo de compras...</p>
         </div>
@@ -176,7 +176,7 @@ export const PurchasesVendorsView: React.FC = () => {
         /* ORDERS LIST */
         <div className="space-y-3">
           {orders.map(po => (
-            <div key={po.id} className="glass-card p-4 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div key={po.id} className="glass-card p-4 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2">
                   <span className="font-extrabold text-xs text-slate-800 font-mono">{po.numero}</span>
@@ -202,7 +202,7 @@ export const PurchasesVendorsView: React.FC = () => {
         /* VENDORS CATALOG */
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {vendors.map(v => (
-            <div key={v.id} className="glass-card p-5 rounded-2xl space-y-2">
+            <div key={v.id} className="glass-card p-5 rounded-lg space-y-2">
               <h3 className="font-bold text-slate-800 text-xs">{v.nombre}</h3>
               <p className="text-[12px] text-slate-600">Contacto: <strong>{v.contacto_nombre || 'N/A'}</strong></p>
               <p className="text-[12px] text-slate-600">Teléfono: <strong>{v.telefono || 'N/A'}</strong></p>
@@ -216,7 +216,7 @@ export const PurchasesVendorsView: React.FC = () => {
       {/* Vendor Modal */}
       {isVendorModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm p-4">
-          <div className="glass-modal rounded-3xl max-w-md w-full p-6 shadow-2xl">
+          <div className="glass-modal rounded-xl max-w-md w-full p-6 shadow-2xl">
             <div className="flex items-center justify-between pb-3 border-b border-white/60">
               <h3 className="font-bold text-base text-slate-800">Registrar Proveedor</h3>
               <button onClick={() => setIsVendorModalOpen(false)} className="p-1 text-slate-400 hover:text-slate-700 cursor-pointer">
@@ -293,7 +293,7 @@ export const PurchasesVendorsView: React.FC = () => {
       {/* PO Modal */}
       {isPoModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm p-4">
-          <div className="glass-modal rounded-3xl max-w-md w-full p-6 shadow-2xl">
+          <div className="glass-modal rounded-xl max-w-md w-full p-6 shadow-2xl">
             <div className="flex items-center justify-between pb-3 border-b border-white/60">
               <h3 className="font-bold text-base text-slate-800">Nueva Orden de Compra</h3>
               <button onClick={() => setIsPoModalOpen(false)} className="p-1 text-slate-400 hover:text-slate-700 cursor-pointer">

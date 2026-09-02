@@ -14,7 +14,8 @@ import {
   AlertTriangle,
   UserPlus,
   DollarSign,
-  RefreshCw
+  RefreshCw,
+  ChevronDown
 } from 'lucide-react';
 import { WorkOrder, SparePart, EstadoOT, User } from '../types';
 import { api } from '../services/api';
@@ -90,6 +91,17 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
 
   // Priority editing
   const [editingPriority, setEditingPriority] = useState(false);
+
+  // Accordion state for mobile
+  const [openSections, setOpenSections] = useState<Set<string>>(new Set(['general']));
+  const toggleSection = (id: string) => {
+    setOpenSections(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
 
   // Toast on refresh complete
   useEffect(() => {
@@ -228,6 +240,11 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
   const handleFinalizeWorkOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      // Find the final status to change to
+      const finalStatus = statuses.find(s => s.es_estado_final);
+      if (finalStatus && workOrder.estado?.id !== finalStatus.id) {
+        await api.changeWorkOrderStatus(workOrder.id, finalStatus.id);
+      }
       await api.finalizeWorkOrder(workOrder.id, {
         fecha_termino: new Date().toISOString(),
         hora_termino: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }),
@@ -379,7 +396,7 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm p-4">
-      <div className="glass-modal rounded-3xl max-w-3xl w-full p-6 shadow-2xl max-h-[90vh] flex flex-col">
+      <div className="glass-modal rounded-xl max-w-3xl w-full p-6 shadow-2xl max-h-[90vh] flex flex-col">
         
         {/* Header */}
         <div className="flex items-start justify-between pb-4 border-b border-white/60">
@@ -401,7 +418,7 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
               Equipo: <strong className="text-[#0F434A]">{workOrder.maquina.nombre}</strong> ({workOrder.maquina.codigo})
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col md:flex-row md:items-center gap-2">
             {onViewFull && (
               <button
                 onClick={() => { onViewFull(workOrder.id); onClose(); }}
@@ -424,8 +441,8 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
           </div>
         )}
 
-        {/* Tab Navigation */}
-        <div className="flex items-center gap-1 border-b border-white/60 py-2 text-[13px] font-semibold overflow-x-auto">
+        {/* Tab Navigation - Desktop */}
+        <div className="hidden md:flex items-center gap-1 border-b border-white/60 py-2 text-[13px] font-semibold overflow-x-auto">
           <button
             onClick={() => setActiveTab('general')}
             className={`px-3 py-1.5 rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer ${
@@ -471,27 +488,257 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
             <MessageSquare className="w-3.5 h-3.5" /> Comentarios ({(workOrder.comentarios || []).length})
           </button>
 
-          {!workOrder.estado.es_estado_final && (
-            <button
-              onClick={() => setActiveTab('finalizar')}
-              className={`px-3 py-1.5 rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer ${
-                activeTab === 'finalizar' ? 'bg-[#3D848C] text-slate-900 font-bold' : 'bg-[#D9EDEE]/80 text-[#0F434A] hover:bg-[#D9EDEE]'
-              }`}
-            >
-              <CheckCircle2 className="w-3.5 h-3.5" /> Cierre & Finalizar
-            </button>
-          )}
+          <button
+            onClick={() => setActiveTab('finalizar')}
+            className={`px-3 py-1.5 rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer ${
+              activeTab === 'finalizar' ? 'bg-[#3D848C] text-slate-900 font-bold' : 'bg-[#D9EDEE]/80 text-[#0F434A] hover:bg-[#D9EDEE]'
+            }`}
+          >
+            <CheckCircle2 className="w-3.5 h-3.5" /> Cierre & Finalizar
+          </button>
         </div>
 
-        {/* Tab Body */}
-        <div className="flex-1 overflow-y-auto py-4 space-y-4">
+        {/* Accordion - Mobile */}
+        <div className="md:hidden overflow-y-auto py-4 space-y-3">
+          {/* General */}
+          <div className="glass-panel rounded-xl overflow-hidden">
+            <button onClick={() => toggleSection('general')} className="w-full flex items-center justify-between px-5 py-4 cursor-pointer">
+              <span className="flex items-center gap-2 text-[13px] font-bold text-slate-800"><Wrench className="w-4 h-4 text-[#165B62]" /> General</span>
+              <ChevronDown className={`w-5 h-5 text-slate-500 transition-transform ${openSections.has('general') ? 'rotate-180' : ''}`} />
+            </button>
+            {openSections.has('general') && (
+              <div className="px-5 pb-5">
+                <div className="p-3 bg-white/40 rounded-lg border border-white/60 mb-3">
+                  <p className="font-bold text-slate-500 uppercase tracking-wider text-[12px] mb-1">Descripción Inicial del Problema</p>
+                  <p className="text-slate-800 text-[13px] leading-relaxed">{workOrder.descripcion_problema_inicial || 'Sin descripción detallada'}</p>
+                  {workOrder.foto_inicial_url && <img src={workOrder.foto_inicial_url} alt="Evidencia" className="mt-2 rounded-xl max-h-48 object-cover border border-white/60" />}
+                </div>
+                <div className="p-3 bg-white/50 rounded-lg border border-white/60 mb-3">
+                  <p className="text-[12px] text-slate-400 font-bold uppercase mb-1">Reportado Por</p>
+                  <p className="font-semibold text-slate-800 text-[13px]">{creatorName}</p>
+                </div>
+                <div className="p-3 bg-white/50 rounded-lg border border-white/60 mb-3">
+                  <div className="flex items-center justify-between mb-1">
+                    <p className="text-[12px] text-slate-400 font-bold uppercase">Prioridad</p>
+                    <button onClick={() => setEditingPriority(!editingPriority)} className="text-[12px] font-bold text-[#0F434A] hover:underline cursor-pointer">{editingPriority ? 'Cancelar' : 'Cambiar'}</button>
+                  </div>
+                  {editingPriority ? (
+                    <div className="flex items-center gap-2 mt-2">
+                      {['baja', 'media', 'alta', 'critica'].map(p => (
+                        <button key={p} onClick={() => handlePriorityChange(p)} className={`px-3 py-1.5 rounded-xl text-[13px] font-bold transition-all cursor-pointer ${workOrder.prioridad === p ? (p === 'critica' ? 'bg-rose-500 text-white' : p === 'alta' ? 'bg-amber-500 text-white' : 'bg-[#3D848C] text-white') : 'bg-white/60 text-slate-700 border border-white/80 hover:bg-white'}`}>{p}</button>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="font-semibold text-slate-800 text-[13px] capitalize">{workOrder.prioridad}</p>
+                  )}
+                </div>
+                <div className="p-3 bg-[#D9EDEE]/60 rounded-lg border border-[#3D848C]/40 mb-3">
+                  <p className="font-bold text-slate-800 mb-2 text-[13px]">Cambiar Estado:</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {statuses.sort((a, b) => a.orden - b.orden).map(st => (
+                      <button key={st.id} type="button" onClick={() => handleStatusChange(st.id)} className="px-3 py-1.5 rounded-xl text-[13px] font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5" style={{ backgroundColor: workOrder.estado.id === st.id ? (st.color || '#3D848C') : '#ffffff', color: workOrder.estado.id === st.id ? '#ffffff' : '#1e293b', borderWidth: '2px', borderColor: st.color || '#3D848C' }}>
+                        <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: st.color || '#3D848C' }} />
+                        {st.nombre}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="p-2.5 bg-white/40 rounded-xl border border-white/60"><p className="text-[12px] text-slate-400 font-bold uppercase">Estimación</p><p className="font-bold text-[#165B62] text-[13px] flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{workOrder.hora_termino || 'No definida'}</p></div>
+                  <div className="p-2.5 bg-white/40 rounded-xl border border-white/60"><p className="text-[12px] text-slate-400 font-bold uppercase">Categoría</p><p className="font-semibold text-slate-800 text-[13px]">{workOrder.categoria_mantenimiento?.nombre || 'General'}</p></div>
+                  <div className="p-2.5 bg-white/40 rounded-xl border border-white/60"><p className="text-[12px] text-slate-400 font-bold uppercase">Costo Mano de Obra</p><p className="font-bold text-[#0F434A] text-[13px]">${workOrder.costo_mano_obra}</p></div>
+                  <div className="p-2.5 bg-white/40 rounded-xl border border-white/60"><p className="text-[12px] text-slate-400 font-bold uppercase">Costo Total</p><p className="font-bold text-[#0F434A] text-[13px]">${workOrder.costo_total}</p></div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Operarios */}
+          <div className="glass-panel rounded-xl overflow-hidden">
+            <button onClick={() => toggleSection('operarios')} className="w-full flex items-center justify-between px-5 py-4 cursor-pointer">
+              <span className="flex items-center gap-2 text-[13px] font-bold text-slate-800"><Users className="w-4 h-4 text-[#165B62]" /> Operarios ({(workOrder.colaboradores || []).length})</span>
+              <ChevronDown className={`w-5 h-5 text-slate-500 transition-transform ${openSections.has('operarios') ? 'rotate-180' : ''}`} />
+            </button>
+            {openSections.has('operarios') && (
+              <div className="px-5 pb-5">
+                <form onSubmit={handleAddOperator} className="p-3.5 bg-white/50 rounded-lg border border-white/60 space-y-3 mb-4">
+                  <p className="font-bold text-slate-800 text-[13px] flex items-center gap-1.5"><UserPlus className="w-4 h-4 text-[#165B62]" /> Asignar Operario</p>
+                  <div className="flex flex-col gap-2">
+                    <select value={selectedUserIdToAssign} onChange={e => setSelectedUserIdToAssign(e.target.value ? Number(e.target.value) : '')} className="flex-1 px-3 py-2 glass-input rounded-xl text-[13px] focus:outline-none">
+                      <option value="">-- Seleccionar personal --</option>
+                      {allUsers.filter(u => !(workOrder.colaboradores || []).some(c => Number(c.user_id) === u.id)).map(u => (
+                        <option key={u.id} value={u.id}>{u.nombre} {u.apellido} - {u.cargo || u.rol}</option>
+                      ))}
+                    </select>
+                    <button type="submit" disabled={!selectedUserIdToAssign} className="px-4 py-2 bg-[#3D848C] hover:bg-[#165B62] disabled:opacity-50 text-slate-900 hover:text-white font-bold rounded-xl text-[13px] transition-all cursor-pointer flex items-center justify-center gap-1.5 shrink-0">
+                      <UserPlus className="w-4 h-4" /> Asignar Operario
+                    </button>
+                  </div>
+                </form>
+                <div className="space-y-2">
+                  {(!workOrder.colaboradores || workOrder.colaboradores.length === 0) ? (
+                    <div className="p-6 text-center text-slate-400 italic bg-white/30 rounded-lg border border-dashed border-white/60">Sin operarios asignados.</div>
+                  ) : (
+                    workOrder.colaboradores.map(collab => {
+                      const u = collab.usuario;
+                      return (
+                        <div key={collab.id} className="p-3 bg-white/60 rounded-lg border border-white/80 shadow-xs flex items-start justify-between gap-3">
+                          <div className="flex items-start gap-3">
+                            <div className="w-10 h-10 rounded-full bg-[#D9EDEE] text-[#0A2E33] border border-[#3D848C] font-bold flex items-center justify-center text-[13px] shrink-0 mt-0.5">
+                              {u ? `${u.nombre.charAt(0)}${u.apellido.charAt(0)}` : 'OP'}
+                            </div>
+                            <div className="space-y-1">
+                              <p className="font-extrabold text-slate-900 text-[13px]">{u ? `${u.nombre} ${u.apellido}` : `Operario #${collab.user_id}`}</p>
+                              <p className="text-[12px] text-[#0F434A] font-bold capitalize">{u?.cargo || u?.rol || 'Técnico'}</p>
+                              {u?.email && <p className="text-[12px] text-slate-500 font-medium">✉ {u.email}</p>}
+                              {u?.especialidades && u.especialidades.length > 0 && (
+                                <div className="flex flex-wrap gap-1 pt-1">{u.especialidades.map(esp => <span key={esp.id} className="text-[11px] px-1.5 py-0.5 bg-[#D9EDEE] text-[#0F434A] rounded-md font-semibold">{esp.nombre}</span>)}</div>
+                              )}
+                            </div>
+                          </div>
+                          <button type="button" onClick={() => handleRemoveOperator(collab.user_id)} className="p-1 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all cursor-pointer"><X className="w-4 h-4" /></button>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Checklist */}
+          <div className="glass-panel rounded-xl overflow-hidden">
+            <button onClick={() => toggleSection('checklist')} className="w-full flex items-center justify-between px-5 py-4 cursor-pointer">
+              <span className="flex items-center gap-2 text-[13px] font-bold text-slate-800"><CheckSquare className="w-4 h-4 text-[#165B62]" /> Checklist ({(workOrder.checklist_items || []).filter(c => c.completado).length}/{(workOrder.checklist_items || []).length})</span>
+              <ChevronDown className={`w-5 h-5 text-slate-500 transition-transform ${openSections.has('checklist') ? 'rotate-180' : ''}`} />
+            </button>
+            {openSections.has('checklist') && (
+              <div className="px-5 pb-5">
+                <div className="space-y-2">
+                  {(workOrder.checklist_items || []).map(item => (
+                    <div key={item.id} onClick={() => handleToggleChecklist(item.id, item.completado)} className={`p-3 rounded-lg border flex items-center justify-between cursor-pointer transition-all ${item.completado ? 'bg-[#D9EDEE]/80 border-[#3D848C] text-[#0F434A]' : 'bg-white/40 border-white/60 text-slate-800'}`}>
+                      <div className="flex items-center gap-3">
+                        <input type="checkbox" checked={Boolean(item.completado)} onChange={() => {}} className="w-4 h-4 text-[#165B62] rounded focus:ring-0" />
+                        <span className={`font-medium text-[13px] ${item.completado ? 'line-through text-[#0F434A]' : ''}`}>{item.texto}</span>
+                      </div>
+                      {item.completado_en && <span className="text-[12px] text-[#0F434A] font-medium">✓ {new Date(item.completado_en).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>}
+                    </div>
+                  ))}
+                </div>
+                <form onSubmit={handleAddChecklistItem} className="flex gap-2 pt-2">
+                  <input type="text" value={newChecklistText} onChange={e => setNewChecklistText(e.target.value)} placeholder="Agregar tarea..." className="flex-1 px-3 py-2 glass-input rounded-xl text-[13px] focus:outline-none" />
+                  <button type="submit" className="px-3 py-2 bg-[#3D848C] hover:bg-[#165B62] text-slate-900 hover:text-white font-bold rounded-xl text-[13px] cursor-pointer transition-all">Agregar</button>
+                </form>
+              </div>
+            )}
+          </div>
+
+          {/* Repuestos */}
+          <div className="glass-panel rounded-xl overflow-hidden">
+            <button onClick={() => toggleSection('materiales')} className="w-full flex items-center justify-between px-5 py-4 cursor-pointer">
+              <span className="flex items-center gap-2 text-[13px] font-bold text-slate-800"><Package className="w-4 h-4 text-[#165B62]" /> Repuestos ({(workOrder.solicitudes_material || []).length})</span>
+              <ChevronDown className={`w-5 h-5 text-slate-500 transition-transform ${openSections.has('materiales') ? 'rotate-180' : ''}`} />
+            </button>
+            {openSections.has('materiales') && (
+              <div className="px-5 pb-5">
+                <form onSubmit={handleAddMaterial} className="p-3 bg-white/40 rounded-lg border border-white/60 space-y-3 mb-3">
+                  <p className="font-bold text-slate-800 text-[13px]">Solicitar Repuesto:</p>
+                  <select value={selectedSparePartId} onChange={e => setSelectedSparePartId(e.target.value ? Number(e.target.value) : '')} className="w-full px-2.5 py-1.5 glass-input rounded-xl text-[13px] focus:outline-none">
+                    <option value="">-- Catálogo --</option>
+                    {spareParts.map(s => <option key={s.id} value={s.id}>{s.codigo} - {s.nombre} (Disp: {s.stock_actual})</option>)}
+                  </select>
+                  <input type="number" min="1" value={materialQty} onChange={e => setMaterialQty(Math.max(1, parseInt(e.target.value) || 1))} className="w-full px-2.5 py-1.5 glass-input rounded-xl text-[13px] text-center font-bold" />
+                  {!selectedSparePartId && <input type="text" value={customMatName} onChange={e => setCustomMatName(e.target.value)} placeholder="O insumo libre..." className="w-full px-2.5 py-1.5 glass-input rounded-xl text-[13px]" />}
+                  <button type="submit" className="px-4 py-1.5 bg-[#3D848C] hover:bg-[#165B62] text-slate-900 hover:text-white font-bold rounded-xl text-[13px] cursor-pointer transition-all">Solicitar Material</button>
+                </form>
+                <div className="space-y-2">
+                  {(workOrder.solicitudes_material || []).length === 0 ? <p className="text-slate-400 text-[13px] italic">Sin materiales solicitados.</p> : (workOrder.solicitudes_material || []).map(m => (
+                    <div key={m.id} className="p-3 bg-white/40 border border-white/60 rounded-lg flex items-center justify-between">
+                      <div><p className="font-bold text-slate-800 text-[13px]">{m.nombre}</p><p className="text-[13px] text-slate-500">Cant: {m.cantidad} {m.unidad_medida}</p></div>
+                      <div className="text-right"><p className="font-extrabold text-[#0F434A] text-[13px]">${((m.costo_total || ((m.costo_unitario || 0) * m.cantidad))).toFixed(2)}</p><p className="text-[12px] text-slate-400">${(m.costo_unitario || 0).toFixed(2)} c/u</p></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Comentarios */}
+          <div className="glass-panel rounded-xl overflow-hidden">
+            <button onClick={() => toggleSection('comentarios')} className="w-full flex items-center justify-between px-5 py-4 cursor-pointer">
+              <span className="flex items-center gap-2 text-[13px] font-bold text-slate-800"><MessageSquare className="w-4 h-4 text-[#165B62]" /> Comentarios ({(workOrder.comentarios || []).length})</span>
+              <ChevronDown className={`w-5 h-5 text-slate-500 transition-transform ${openSections.has('comentarios') ? 'rotate-180' : ''}`} />
+            </button>
+            {openSections.has('comentarios') && (
+              <div className="px-5 pb-5">
+                <div className="space-y-3 max-h-60 overflow-y-auto pr-1">
+                  {(workOrder.comentarios || []).length === 0 ? <p className="text-slate-400 text-[13px] italic text-center py-4">Sin comentarios.</p> : (workOrder.comentarios || []).map(c => (
+                    <div key={c.id} className="p-3 bg-white/40 rounded-lg border border-white/60">
+                      <div className="flex items-center justify-between mb-1">
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-slate-800 text-[13px]">{c.usuario ? `${c.usuario.nombre} ${c.usuario.apellido}` : 'Técnico'}</span>
+                          {c.usuario?.rol && <span className="text-[10px] text-slate-400 bg-white/60 px-1.5 py-0.5 rounded-full">{c.usuario.rol}</span>}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {c.tiempo_utilizado != null && c.tiempo_utilizado > 0 && (
+                            <span className="text-[11px] font-bold text-[#165B62] bg-[#D9EDEE] px-2 py-0.5 rounded-full flex items-center gap-1"><Clock className="w-3 h-3" /> {formatMinutesToTime(c.tiempo_utilizado)}</span>
+                          )}
+                          <span className="text-[12px] text-slate-400">{new Date(c.created_at).toLocaleString('es-ES')}</span>
+                        </div>
+                      </div>
+                      <p className="text-slate-700 leading-relaxed text-[13px]">{c.mensaje}</p>
+                      {c.imagen_url && <img src={c.imagen_url} alt="Evidencia" className="mt-2 rounded-xl max-h-40 object-cover border border-white/60" />}
+                    </div>
+                  ))}
+                </div>
+                <form onSubmit={handleAddComment} className="pt-3 mt-3 space-y-2 border-t border-white/60">
+                  <textarea rows={2} value={commentText} onChange={e => setCommentText(e.target.value)} placeholder="Escribe un comentario..." className="w-full px-3 py-2 glass-input rounded-xl text-[13px] focus:outline-none" />
+                  <div className="flex items-center gap-2">
+                    <input type="url" value={commentImage} onChange={e => setCommentImage(e.target.value)} placeholder="URL de foto (opcional)" className="flex-1 px-3 py-1.5 glass-input rounded-xl text-[13px]" />
+                    <div className="flex items-center gap-1 px-2 py-1.5 glass-input rounded-xl">
+                      <Clock className="w-3.5 h-3.5 text-[#165B62]" />
+                      <input type="text" value={commentTime} onChange={e => { const val = e.target.value.replace(/[^0-9:]/g, ''); if (/^\d{1,2}:?\d{0,2}$/.test(val) || val === '') setCommentTime(val); }} placeholder="0:00" className="w-16 bg-transparent text-[13px] font-bold focus:outline-none text-center" title="Tiempo trabajado (horas:minutos)" />
+                      <span className="text-[11px] text-slate-400">horas</span>
+                    </div>
+                    <button type="submit" className="px-4 py-1.5 bg-[#3D848C] hover:bg-[#165B62] text-slate-900 hover:text-white font-bold rounded-xl text-[13px] shrink-0 flex items-center gap-1 cursor-pointer transition-all"><Send className="w-3.5 h-3.5" /> Comentar</button>
+                  </div>
+                </form>
+              </div>
+            )}
+          </div>
+
+          {/* Finalizar */}
+          <div className="glass-panel rounded-xl overflow-hidden">
+              <button onClick={() => toggleSection('finalizar')} className="w-full flex items-center justify-between px-5 py-4 cursor-pointer">
+                <span className="flex items-center gap-2 text-[13px] font-bold text-[#0F434A]"><CheckCircle2 className="w-4 h-4 text-[#165B62]" /> Cierre & Finalizar</span>
+                <ChevronDown className={`w-5 h-5 text-slate-500 transition-transform ${openSections.has('finalizar') ? 'rotate-180' : ''}`} />
+              </button>
+              {openSections.has('finalizar') && (
+                <div className="px-5 pb-5">
+                  <form onSubmit={handleFinalizeWorkOrder} className="space-y-3 text-[13px] bg-[#D9EDEE]/60 p-4 rounded-lg border border-[#3D848C]/60">
+                    <h4 className="font-bold text-slate-800 text-[14px] flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#165B62]" /> Declaración de Término</h4>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div><label className="block font-semibold text-slate-700 mb-1">Downtime (min)</label><input type="number" value={finalDowntimeMin} onChange={e => setFinalDowntimeMin(parseInt(e.target.value) || 0)} className="w-full px-3 py-1.5 glass-input rounded-xl font-bold" /></div>
+                      <div><label className="block font-semibold text-slate-700 mb-1">Costo Mano de Obra ($)</label><input type="number" step="0.01" value={finalLaborCost} onChange={e => setFinalLaborCost(parseFloat(e.target.value) || 0)} className="w-full px-3 py-1.5 glass-input rounded-xl font-bold" /></div>
+                    </div>
+                    <div><label className="block font-semibold text-slate-700 mb-1">Mensaje de Entrega</label><textarea rows={2} value={finalMessage} onChange={e => setFinalMessage(e.target.value)} placeholder="Indica pruebas realizadas..." className="w-full px-3 py-1.5 glass-input rounded-xl" /></div>
+                    <div><label className="block font-semibold text-slate-700 mb-1">Foto de Término (URL)</label><input type="url" value={finalPhotoUrl} onChange={e => setFinalPhotoUrl(e.target.value)} placeholder="https://ejemplo.com/foto.jpg" className="w-full px-3 py-1.5 glass-input rounded-xl" /></div>
+                    <button type="submit" className="w-full py-2.5 bg-[#3D848C] hover:bg-[#165B62] text-slate-900 hover:text-white font-extrabold rounded-xl text-[13px] transition-colors cursor-pointer">CERRAR Y FINALIZAR</button>
+                  </form>
+                </div>
+              )}
+            </div>
+        </div>
+
+        {/* Tab Body - Desktop */}
+        <div className="hidden md:block flex-1 overflow-y-auto py-4 space-y-4">
           
           {/* TAB 1: GENERAL */}
           {activeTab === 'general' && (
             <div className="space-y-4 text-[13px]">
               
               {/* Problem Statement */}
-              <div className="p-3 bg-white/40 rounded-2xl border border-white/60">
+              <div className="p-3 bg-white/40 rounded-lg border border-white/60">
                 <p className="font-bold text-slate-500 uppercase tracking-wider text-[12px] mb-1">Descripción Inicial del Problema</p>
                 <p className="text-slate-800 text-[13px] leading-relaxed">{workOrder.descripcion_problema_inicial || 'Sin descripción detallada'}</p>
                 {workOrder.foto_inicial_url && (
@@ -500,13 +747,13 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
               </div>
 
               {/* Creator Info */}
-              <div className="p-3 bg-white/50 rounded-2xl border border-white/60">
+              <div className="p-3 bg-white/50 rounded-lg border border-white/60">
                 <p className="text-[12px] text-slate-400 font-bold uppercase mb-1">Reportado Por</p>
                 <p className="font-semibold text-slate-800 text-[13px]">{creatorName}</p>
               </div>
 
               {/* Priority editable */}
-              <div className="p-3 bg-white/50 rounded-2xl border border-white/60">
+              <div className="p-3 bg-white/50 rounded-lg border border-white/60">
                 <div className="flex items-center justify-between mb-1">
                   <p className="text-[12px] text-slate-400 font-bold uppercase">Prioridad</p>
                   <button
@@ -538,7 +785,7 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
               </div>
 
               {/* Quick Assigned Operarios Summary */}
-              <div className="p-3 bg-white/50 rounded-2xl border border-white/60">
+              <div className="p-3 bg-white/50 rounded-lg border border-white/60">
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-bold text-slate-800 flex items-center gap-1.5">
                     <Users className="w-4 h-4 text-[#165B62]" /> Operarios Asignados ({(workOrder.colaboradores || []).length})
@@ -575,7 +822,7 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
               </div>
 
               {/* Status Changer Bar - Dynamic */}
-              <div className="p-3 bg-[#D9EDEE]/60 rounded-2xl border border-[#3D848C]/40">
+              <div className="p-3 bg-[#D9EDEE]/60 rounded-lg border border-[#3D848C]/40">
                 <p className="font-bold text-slate-800 mb-2">Cambiar Estado de la Orden:</p>
                 <div className="flex items-center gap-2 flex-wrap">
                   {statuses.sort((a, b) => a.orden - b.orden).map(st => (
@@ -656,7 +903,7 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
                     filteredEvents.map((event, i) => (
                       <div key={i} className="relative">
                         <div className="absolute -left-[18px] top-1.5 w-3 h-3 rounded-full border-2 border-white shadow-xs" style={{ backgroundColor: event.color }} />
-                        <div className="p-3 bg-white/40 rounded-2xl border border-white/60">
+                        <div className="p-3 bg-white/40 rounded-lg border border-white/60">
                           <div className="flex items-center justify-between mb-1">
                             <span className="text-[11px] text-slate-400 flex items-center gap-1">
                               <Clock className="w-3 h-3" />
@@ -678,7 +925,7 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
           {activeTab === 'operarios' && (
             <div className="space-y-4 text-[13px]">
               
-              <form onSubmit={handleAddOperator} className="p-3.5 bg-white/50 rounded-2xl border border-white/60 space-y-3">
+              <form onSubmit={handleAddOperator} className="p-3.5 bg-white/50 rounded-lg border border-white/60 space-y-3">
                 <p className="font-bold text-slate-800 text-[13px] flex items-center gap-1.5">
                   <UserPlus className="w-4 h-4 text-[#165B62]" /> Asignar Nuevo Operario o Técnico a la OT:
                 </p>
@@ -712,7 +959,7 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
                   Equipo de Operarios Asignados ({(workOrder.colaboradores || []).length}):
                 </p>
                 {(!workOrder.colaboradores || workOrder.colaboradores.length === 0) ? (
-                  <div className="p-6 text-center text-slate-400 italic bg-white/30 rounded-2xl border border-dashed border-white/60">
+                  <div className="p-6 text-center text-slate-400 italic bg-white/30 rounded-lg border border-dashed border-white/60">
                     No hay operarios ni técnicos asignados a esta Orden de Trabajo. Asigna al menos uno arriba.
                   </div>
                 ) : (
@@ -720,7 +967,7 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
                     {workOrder.colaboradores.map((collab) => {
                       const u = collab.usuario;
                       return (
-                        <div key={collab.id} className="p-3 bg-white/60 rounded-2xl border border-white/80 shadow-xs flex items-start justify-between gap-3">
+                        <div key={collab.id} className="p-3 bg-white/60 rounded-lg border border-white/80 shadow-xs flex items-start justify-between gap-3">
                           <div className="flex items-start gap-3">
                             <div className="w-10 h-10 rounded-full bg-[#D9EDEE] text-[#0A2E33] border border-[#3D848C] font-bold flex items-center justify-center text-[13px] shrink-0 shadow-2xs mt-0.5">
                               {u ? `${u.nombre.charAt(0)}${u.apellido.charAt(0)}` : 'OP'}
@@ -773,7 +1020,7 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
                   <div
                     key={item.id}
                     onClick={() => handleToggleChecklist(item.id, item.completado)}
-                    className={`p-3 rounded-2xl border flex items-center justify-between cursor-pointer transition-all ${
+                    className={`p-3 rounded-lg border flex items-center justify-between cursor-pointer transition-all ${
                       item.completado ? 'bg-[#D9EDEE]/80 border-[#3D848C] text-[#0F434A]' : 'bg-white/40 border-white/60 text-slate-800'
                     }`}
                   >
@@ -817,7 +1064,7 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
           {/* TAB: MATERIALES */}
           {activeTab === 'materiales' && (
             <div className="space-y-4 text-[13px]">
-              <form onSubmit={handleAddMaterial} className="p-3 bg-white/40 rounded-2xl border border-white/60 space-y-3">
+              <form onSubmit={handleAddMaterial} className="p-3 bg-white/40 rounded-lg border border-white/60 space-y-3">
                 <p className="font-bold text-slate-800 text-[13px]">Solicitar Repuesto o Insumo desde Inventario:</p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   <div className="sm:col-span-2">
@@ -872,7 +1119,7 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
                   <p className="text-slate-400 text-[13px] italic">No hay repuestos asociados a esta orden.</p>
                 ) : (
                   (workOrder.solicitudes_material || []).map(m => (
-                    <div key={m.id} className="p-3 bg-white/40 border border-white/60 rounded-2xl flex items-center justify-between">
+                    <div key={m.id} className="p-3 bg-white/40 border border-white/60 rounded-lg flex items-center justify-between">
                       <div>
                         <p className="font-bold text-slate-800 text-[13px]">{m.nombre}</p>
                         <p className="text-[13px] text-slate-500">Cantidad: {m.cantidad} {m.unidad_medida}</p>
@@ -896,7 +1143,7 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
                   <p className="text-slate-400 text-[13px] italic text-center py-4">Sin comentarios de mantenimiento aún.</p>
                 ) : (
                   (workOrder.comentarios || []).map(c => (
-                    <div key={c.id} className="p-3 bg-white/40 rounded-2xl border border-white/60">
+                    <div key={c.id} className="p-3 bg-white/40 rounded-lg border border-white/60">
                       <div className="flex items-center justify-between mb-1">
                         <div className="flex items-center gap-2">
                           <span className="font-bold text-slate-800 text-[13px]">{c.usuario ? `${c.usuario.nombre} ${c.usuario.apellido}` : 'Técnico'}</span>
@@ -965,7 +1212,7 @@ export const WorkOrderDetailModal: React.FC<WorkOrderDetailModalProps> = ({
 
           {/* TAB: FINALIZAR */}
           {activeTab === 'finalizar' && (
-            <form onSubmit={handleFinalizeWorkOrder} className="space-y-3 text-[13px] bg-[#D9EDEE]/60 p-4 rounded-2xl border border-[#3D848C]/60">
+            <form onSubmit={handleFinalizeWorkOrder} className="space-y-3 text-[13px] bg-[#D9EDEE]/60 p-4 rounded-lg border border-[#3D848C]/60">
               <h4 className="font-bold text-slate-800 text-[14px] flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#165B62]" />
                 Declaración de Término de Mantenimiento

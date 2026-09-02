@@ -107,6 +107,8 @@ export class MantisApiService extends ApiClient {
   // Maintenance
   public getMaintenancePlans = () => this.maintenance.getMaintenancePlans();
   public createMaintenancePlan = (data: any) => this.maintenance.createMaintenancePlan(data);
+  public updateMaintenancePlan = (id: number, data: any) => this.maintenance.updateMaintenancePlan(id, data);
+  public deleteMaintenancePlan = (id: number) => this.maintenance.deleteMaintenancePlan(id);
 
   // Purchasing
   public getVendors = () => this.purchasing.getVendors();

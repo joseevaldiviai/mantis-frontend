@@ -164,7 +164,7 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
     <div className="space-y-6">
 
       {/* Header Banner */}
-      <div className="glass-panel p-6 rounded-3xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="glass-panel p-6 rounded-xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-extrabold text-slate-800 flex items-center gap-2">
             <QrCode className="w-6 h-6 text-[#165B62]" />
@@ -177,7 +177,7 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
       </div>
 
       {/* Search Input */}
-      <div className="glass-panel p-4 rounded-2xl flex flex-col sm:flex-row items-center gap-3">
+      <div className="glass-panel p-4 rounded-lg flex flex-col sm:flex-row items-center gap-3">
         <div className="relative flex-1 w-full">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
           <input
@@ -235,7 +235,7 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
 
       {/* Error */}
       {error && (
-        <div className="glass-panel p-4 rounded-2xl border border-rose-200 bg-rose-50/50 flex items-center gap-3">
+        <div className="glass-panel p-4 rounded-lg border border-rose-200 bg-rose-50/50 flex items-center gap-3">
           <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0" />
           <p className="flex-1 text-xs font-medium text-rose-700">{error}</p>
           <button
@@ -252,10 +252,10 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
         <div className="space-y-6">
 
           {/* ═══ Machine Info Card ═══ */}
-          <div className="glass-panel p-6 rounded-3xl shadow-sm">
+          <div className="glass-panel p-6 rounded-xl shadow-sm">
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
               <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#3D848C] to-[#165B62] flex items-center justify-center text-white shrink-0 shadow-md">
+                <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-[#3D848C] to-[#165B62] flex items-center justify-center text-white shrink-0 shadow-md">
                   <Wrench className="w-7 h-7" />
                 </div>
                 <div>
@@ -324,7 +324,7 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
 
           {/* ═══ Ficha Técnica ═══ */}
           {qrData.maquina.ficha_tecnica && qrData.maquina.ficha_tecnica.length > 0 && (
-            <div className="glass-panel p-5 rounded-2xl">
+            <div className="glass-panel p-5 rounded-lg">
               <h3 className="text-xs font-extrabold text-slate-700 uppercase tracking-wide mb-3 flex items-center gap-1.5">
                 <Shield className="w-3.5 h-3.5 text-[#165B62]" /> Ficha Técnica
               </h3>
@@ -340,7 +340,7 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
           )}
 
           {/* ═══ Maintenance History ═══ */}
-          <div className="glass-panel p-5 rounded-2xl">
+          <div className="glass-panel p-5 rounded-lg">
             <h3 className="text-xs font-extrabold text-slate-700 uppercase tracking-wide mb-3 flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5 text-[#165B62]" /> Historial de Mantenimiento ({qrData.historial.length})
             </h3>
@@ -379,7 +379,7 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
 
           {/* ═══ Documents Section ═══ */}
           {(qrData.manuales.length > 0 || qrData.tutoriales.length > 0 || qrData.otros_documentos.length > 0) && (
-            <div className="glass-panel p-5 rounded-2xl">
+            <div className="glass-panel p-5 rounded-lg">
               <h3 className="text-xs font-extrabold text-slate-700 uppercase tracking-wide mb-3 flex items-center gap-1.5">
                 <FolderOpen className="w-3.5 h-3.5 text-[#165B62]" /> Documentos y Recursos
               </h3>
@@ -459,7 +459,7 @@ export const QrScannerView: React.FC<QrScannerViewProps> = ({ onCreateWorkOrder 
 
       {/* Empty state */}
       {!qrData && !loading && !error && (
-        <div className="glass-panel py-16 text-center rounded-3xl">
+        <div className="glass-panel py-16 text-center rounded-xl">
           <QrCode className="w-12 h-12 text-slate-300 mx-auto mb-3" />
           <p className="text-sm font-bold text-slate-700">Ingresa un código QR para consultar el equipo</p>
           <p className="text-xs text-slate-400 mt-1">Puedes escanear el código QR con la cámara o escribirlo manualmente en el campo de búsqueda.</p>

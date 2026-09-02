@@ -150,7 +150,7 @@ export const QrCameraScanner: React.FC<QrCameraScannerProps> = ({ onScan, isOpen
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
-      <div className="glass-modal rounded-3xl max-w-sm w-full p-6 shadow-2xl">
+      <div className="glass-modal rounded-xl max-w-sm w-full p-6 shadow-2xl">
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-white/60">
           <div className="flex items-center gap-2">
@@ -172,11 +172,11 @@ export const QrCameraScanner: React.FC<QrCameraScannerProps> = ({ onScan, isOpen
 
         {/* Camera viewport */}
         <div className="mt-4 space-y-3">
-          <div className="relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-700 aspect-square">
+          <div className="relative rounded-lg overflow-hidden bg-slate-900 border border-slate-700 aspect-square">
             <div
               ref={containerRef}
               id="qr-camera-reader"
-              className="w-full h-full [&>video]:rounded-2xl [&>video]:object-cover"
+              className="w-full h-full [&>video]:rounded-lg [&>video]:object-cover"
             />
 
             {/* Scan overlay */}

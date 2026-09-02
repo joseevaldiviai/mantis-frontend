@@ -10,7 +10,7 @@ export const RagView: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Banner */}
-      <div className="glass-panel rounded-2xl p-6 relative overflow-hidden">
+      <div className="glass-panel rounded-lg p-6 relative overflow-hidden">
         <div className="absolute -top-16 -right-16 w-48 h-48 bg-[#3D848C]/8 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10">

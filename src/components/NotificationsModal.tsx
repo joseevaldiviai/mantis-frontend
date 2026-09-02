@@ -49,7 +49,7 @@ export const NotificationsModal: React.FC<NotificationsModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/40 backdrop-blur-xs p-4">
-      <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-emerald-100 max-h-[85vh] flex flex-col">
+      <div className="bg-white rounded-lg max-w-md w-full p-6 shadow-2xl border border-emerald-100 max-h-[85vh] flex flex-col">
         
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-stone-100">

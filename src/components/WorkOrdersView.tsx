@@ -334,7 +334,7 @@ export const WorkOrdersView: React.FC<WorkOrdersViewProps> = ({
     <div className="space-y-6">
       
       {/* Top Title & Mode Selector */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-5 rounded-3xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-panel p-5 rounded-xl">
         <div>
           <h1 className="text-xl font-extrabold text-slate-800 flex items-center gap-2">
             <Wrench className="w-6 h-6 text-[#165B62]" />
@@ -378,7 +378,7 @@ export const WorkOrdersView: React.FC<WorkOrdersViewProps> = ({
       </div>
 
       {/* Filters Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 glass-card p-4 rounded-2xl">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 glass-card p-4 rounded-lg">
         <div className="relative w-full sm:w-80">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
           <input
@@ -408,12 +408,12 @@ export const WorkOrdersView: React.FC<WorkOrdersViewProps> = ({
 
       {/* Content Rendering */}
       {loading ? (
-        <div className="py-12 text-center text-slate-500 glass-card rounded-2xl p-8">
+        <div className="py-12 text-center text-slate-500 glass-card rounded-lg p-8">
           <RefreshCw className="w-6 h-6 text-[#165B62] animate-spin mx-auto mb-2" />
           <p className="text-xs font-medium">Cargando órdenes de trabajo...</p>
         </div>
       ) : kanbanColumns.length === 0 ? (
-        <div className="py-12 text-center text-slate-500 glass-card rounded-2xl p-8">
+        <div className="py-12 text-center text-slate-500 glass-card rounded-lg p-8">
           <AlertCircle className="w-6 h-6 text-amber-400 mx-auto mb-2" />
           <p className="text-xs font-medium">No hay estados configurados</p>
           <p className="text-[11px] text-slate-400 mt-1">Ve a Catálogos para crear estados de OT</p>
@@ -435,7 +435,7 @@ export const WorkOrdersView: React.FC<WorkOrdersViewProps> = ({
               <div
                 key={col.statusName}
                 data-status-name={col.statusName}
-                className={`glass-panel p-3 rounded-2xl min-w-[240px] flex flex-col h-full transition-all ${isOver ? 'ring-2 ring-blue-400 bg-blue-50/30' : ''}`}
+                className={`glass-panel p-3 rounded-lg min-w-[240px] flex flex-col h-full transition-all ${isOver ? 'ring-2 ring-blue-400 bg-blue-50/30' : ''}`}
                 onDragOver={(e) => handleDragOver(e, col.statusName)}
                 onDragLeave={handleDragLeave}
                 onDrop={(e) => handleDrop(e, col.statusName)}
@@ -469,7 +469,7 @@ export const WorkOrdersView: React.FC<WorkOrdersViewProps> = ({
                           setIsRefreshingOT(true);
                           api.getWorkOrder(ot.id).then(setSelectedOT).finally(() => setIsRefreshingOT(false));
                         }}
-                        className={`glass-card p-3.5 rounded-2xl hover:border-[#3D848C] cursor-pointer transition-all space-y-2 group ${draggedOT?.id === ot.id ? 'opacity-50' : ''}`}
+                        className={`glass-card p-3.5 rounded-lg hover:border-[#3D848C] cursor-pointer transition-all space-y-2 group ${draggedOT?.id === ot.id ? 'opacity-50' : ''}`}
                       >
                         <div className="flex items-center justify-between">
                           <span className="font-extrabold text-xs text-slate-800 group-hover:text-[#0F434A]">{ot.numero}</span>
@@ -541,7 +541,7 @@ export const WorkOrdersView: React.FC<WorkOrdersViewProps> = ({
       ) : (
 
         /* TABLE LIST VIEW */
-        <div className="glass-card rounded-3xl overflow-hidden">
+        <div className="glass-card rounded-xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead className="bg-white/40 border-b border-white/60 text-slate-600 font-bold uppercase tracking-wider">
@@ -661,7 +661,7 @@ export const WorkOrdersView: React.FC<WorkOrdersViewProps> = ({
       {/* Create New Work Order Modal */}
       {isCreateModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm p-4">
-          <div className="glass-modal rounded-3xl max-w-md w-full p-6 shadow-2xl">
+          <div className="glass-modal rounded-xl max-w-md w-full p-6 shadow-2xl">
             <div className="flex items-center justify-between pb-3 border-b border-white/60">
               <h3 className="font-bold text-base text-slate-800">Crear Nueva Orden de Trabajo</h3>
               <button onClick={onCloseCreateModal} className="p-1 text-slate-400 hover:text-slate-700 cursor-pointer">

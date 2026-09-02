@@ -170,7 +170,7 @@ export const WorkerDetailPanel: React.FC<WorkerDetailPanelProps> = ({ desde, has
 
   if (loading) {
     return (
-      <div className="glass-card p-6 rounded-3xl">
+      <div className="glass-card p-6 rounded-xl">
         <div className="flex items-center justify-center gap-3 py-8">
           <Loader className="w-5 h-5 text-[#165B62] animate-spin" />
           <span className="text-[13px] text-slate-500 font-medium">Cargando detalle de trabajadores...</span>
@@ -181,7 +181,7 @@ export const WorkerDetailPanel: React.FC<WorkerDetailPanelProps> = ({ desde, has
 
   if (workers.length === 0) {
     return (
-      <div className="glass-card p-6 rounded-3xl">
+      <div className="glass-card p-6 rounded-xl">
         <div className="text-center py-8 text-slate-400">
           <Users className="w-8 h-8 mx-auto mb-2 opacity-30" />
           <p className="text-[13px]">No hay actividad de trabajadores en el período seleccionado.</p>
@@ -201,23 +201,23 @@ export const WorkerDetailPanel: React.FC<WorkerDetailPanelProps> = ({ desde, has
     <div className="space-y-4">
       {/* Summary Cards */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-        <div className="glass-card p-4 rounded-2xl text-center">
+        <div className="glass-card p-4 rounded-lg text-center">
           <p className="text-[12px] font-bold text-slate-500 uppercase">Trabajadores Activos</p>
           <p className="text-2xl font-black text-[#165B62] mt-1">{totalWorkers}</p>
         </div>
-        <div className="glass-card p-4 rounded-2xl text-center">
+        <div className="glass-card p-4 rounded-lg text-center">
           <p className="text-[12px] font-bold text-slate-500 uppercase">OTs Atendidas</p>
           <p className="text-2xl font-black text-slate-800 mt-1">{totalOTsHandled}</p>
         </div>
-        <div className="glass-card p-4 rounded-2xl text-center">
+        <div className="glass-card p-4 rounded-lg text-center">
           <p className="text-[12px] font-bold text-slate-500 uppercase">Downtime Total</p>
           <p className="text-2xl font-black text-rose-700 mt-1">{formatTime(totalTimeAll)}</p>
         </div>
-        <div className="glass-card p-4 rounded-2xl text-center">
+        <div className="glass-card p-4 rounded-lg text-center">
           <p className="text-[12px] font-bold text-slate-500 uppercase">Tiempo de Trabajo</p>
           <p className="text-2xl font-black text-amber-700 mt-1">{formatTime(totalCommentTime)}</p>
         </div>
-        <div className="glass-card p-4 rounded-2xl text-center">
+        <div className="glass-card p-4 rounded-lg text-center">
           <p className="text-[12px] font-bold text-slate-500 uppercase">Comentarios</p>
           <p className="text-2xl font-black text-[#0F434A] mt-1">{totalComments}</p>
         </div>
@@ -225,7 +225,7 @@ export const WorkerDetailPanel: React.FC<WorkerDetailPanelProps> = ({ desde, has
 
       {/* Worker Cards */}
       {workers.map((worker, idx) => (
-        <div key={worker.user.id} className="glass-card rounded-2xl overflow-hidden">
+        <div key={worker.user.id} className="glass-card rounded-lg overflow-hidden">
           {/* Worker Header */}
           <div
             className="p-4 flex items-center justify-between cursor-pointer hover:bg-white/20 transition-colors"
@@ -234,7 +234,7 @@ export const WorkerDetailPanel: React.FC<WorkerDetailPanelProps> = ({ desde, has
             <div className="flex items-center gap-3">
               {/* Avatar */}
               <div className="relative">
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-extrabold text-[14px] shadow-md ${
+                <div className={`w-12 h-12 rounded-lg flex items-center justify-center font-extrabold text-[14px] shadow-md ${
                   idx === 0 ? 'bg-amber-400 text-amber-900 border-2 border-amber-500' :
                   idx === 1 ? 'bg-slate-300 text-slate-700 border-2 border-slate-400' :
                   idx === 2 ? 'bg-orange-300 text-orange-800 border-2 border-orange-400' :

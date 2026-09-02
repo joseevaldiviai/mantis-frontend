@@ -375,7 +375,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
     <div className="space-y-6">
       
       {/* Header Banner */}
-      <div className="glass-panel p-6 rounded-3xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="glass-panel p-6 rounded-xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-extrabold text-slate-800 flex items-center gap-2">
             <Users className="w-6 h-6 text-[#165B62]" />
@@ -431,7 +431,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
 
       {/* ═══ Resumen del Sistema + Empresas ═══ */}
       {loading ? (
-        <div className="py-12 text-center text-slate-500 glass-panel rounded-3xl p-8">
+        <div className="py-12 text-center text-slate-500 glass-panel rounded-xl p-8">
           <RefreshCw className="w-6 h-6 text-[#165B62] animate-spin mx-auto mb-2" />
           <p className="text-xs font-medium">Cargando empresas y estadísticas...</p>
         </div>
@@ -440,7 +440,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
           {/* Card Resumen del Sistema — clickeable */}
           <button
             onClick={handleOpenResumen}
-            className="glass-card p-4 rounded-2xl border border-[#3D848C]/40 bg-gradient-to-br from-[#D9EDEE]/60 to-white/40 text-left transition-all hover:shadow-md hover:border-[#3D848C] cursor-pointer group"
+            className="glass-card p-4 rounded-lg border border-[#3D848C]/40 bg-gradient-to-br from-[#D9EDEE]/60 to-white/40 text-left transition-all hover:shadow-md hover:border-[#3D848C] cursor-pointer group"
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
@@ -484,7 +484,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
               <button
                 key={comp.id}
                 onClick={() => setSelectedCompanyId(comp.id)}
-                className={`p-4 rounded-2xl border text-left transition-all relative cursor-pointer ${
+                className={`p-4 rounded-lg border text-left transition-all relative cursor-pointer ${
                   isSel
                     ? 'bg-[#D9EDEE] border-[#3D848C] text-[#0F434A] shadow-xs'
                     : 'glass-card text-slate-700 hover:bg-white/60'
@@ -517,7 +517,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
       )}
 
       {/* ═══ Filtros y búsqueda ═══ */}
-      <div className="glass-panel p-4 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-3">
+      <div className="glass-panel p-4 rounded-lg flex flex-col md:flex-row items-center justify-between gap-3">
         {/* Search */}
         <div className="relative flex-1 w-full">
           <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
@@ -571,18 +571,18 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
 
       {/* ═══ Tabla de Usuarios ═══ */}
       {loading ? (
-        <div className="py-12 text-center text-slate-500 glass-panel rounded-3xl p-8">
+        <div className="py-12 text-center text-slate-500 glass-panel rounded-xl p-8">
           <RefreshCw className="w-6 h-6 text-[#165B62] animate-spin mx-auto mb-2" />
           <p className="text-xs font-medium">Cargando lista de usuarios...</p>
         </div>
       ) : filteredUsers.length === 0 ? (
-        <div className="py-12 text-center text-slate-500 glass-panel rounded-3xl p-8">
+        <div className="py-12 text-center text-slate-500 glass-panel rounded-xl p-8">
           <UserCheck className="w-10 h-10 text-slate-300 mx-auto mb-2" />
           <p className="text-sm font-bold text-slate-700">No se encontraron usuarios</p>
           <p className="text-xs text-slate-400 mt-1">Intenta ajustando los filtros o registra un nuevo usuario.</p>
         </div>
       ) : (
-        <div className="glass-panel rounded-3xl overflow-hidden">
+        <div className="glass-panel rounded-xl overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-xs">
               <thead>
@@ -721,7 +721,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
       {/* ═══ CREATE / EDIT USER MODAL ═══ */}
       {isCreateUserOpen && (currentUser?.rol === 'administrador' || currentUser?.rol === 'super_admin') && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm p-4 overflow-y-auto">
-          <div className="glass-modal rounded-3xl max-w-xl w-full p-6 shadow-2xl my-8">
+          <div className="glass-modal rounded-xl max-w-xl w-full p-6 shadow-2xl my-8">
             <div className="flex items-center justify-between pb-4 border-b border-white/60">
               <div className="flex items-center gap-2">
                 <div className="p-2 bg-[#D9EDEE] text-[#0F434A] rounded-xl border border-[#3D848C]/50">
@@ -900,7 +900,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
               {/* Specialty checkboxes */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-2">Especialidades Técnicas</label>
-                <div className="grid grid-cols-2 gap-2 bg-white/30 p-3 rounded-2xl border border-white/60">
+                <div className="grid grid-cols-2 gap-2 bg-white/30 p-3 rounded-lg border border-white/60">
                   {availableSpecialties.length === 0 ? (
                     <p className="text-[11px] text-slate-400 italic p-1 col-span-2">
                       No hay especialidades cargadas para esta empresa todavía.
@@ -968,7 +968,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
       {/* ═══ CREATE / EDIT COMPANY MODAL ═══ */}
       {isCreateCompanyOpen && currentUser?.rol === 'super_admin' && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm p-4">
-          <div className="glass-modal rounded-3xl max-w-md w-full p-6 shadow-2xl">
+          <div className="glass-modal rounded-xl max-w-md w-full p-6 shadow-2xl">
             <div className="flex items-center justify-between pb-4 border-b border-white/60">
               <div className="flex items-center gap-2">
                 <div className="p-2 bg-[#D9EDEE] text-[#0F434A] rounded-xl border border-[#3D848C]/50">
@@ -1049,7 +1049,7 @@ export const UsersCompaniesView: React.FC<UsersCompaniesViewProps> = ({ user: us
       {/* ═══ MODAL: Resumen del Sistema (KPIs) ═══ */}
       {isResumenOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm p-4 overflow-y-auto">
-          <div className="glass-modal rounded-3xl max-w-3xl w-full p-6 shadow-2xl my-8">
+          <div className="glass-modal rounded-xl max-w-3xl w-full p-6 shadow-2xl my-8">
             <div className="flex items-center justify-between pb-4 border-b border-white/60">
               <div className="flex items-center gap-2">
                 <div className="p-2 bg-[#D9EDEE] text-[#0F434A] rounded-xl border border-[#3D848C]/50">

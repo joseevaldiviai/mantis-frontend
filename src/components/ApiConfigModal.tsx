@@ -44,7 +44,7 @@ export const ApiConfigModal: React.FC<ApiConfigModalProps> = ({ isOpen, onClose 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm p-4">
-      <div className="glass-modal rounded-3xl max-w-lg w-full p-6 shadow-2xl">
+      <div className="glass-modal rounded-xl max-w-lg w-full p-6 shadow-2xl">
         
         <div className="flex items-center justify-between pb-4 border-b border-white/60">
           <div className="flex items-center gap-2">
@@ -96,7 +96,7 @@ export const ApiConfigModal: React.FC<ApiConfigModalProps> = ({ isOpen, onClose 
 
           {/* Test Status Feedback */}
           {testResult && (
-            <div className={`p-3 rounded-2xl text-xs flex items-start gap-2 ${
+            <div className={`p-3 rounded-lg text-xs flex items-start gap-2 ${
               testResult.success ? 'bg-[#D9EDEE] text-[#0F434A] border border-[#3D848C]/60' : 'bg-rose-50/80 text-rose-800 border border-rose-200'
             }`}>
               {testResult.success ? <CheckCircle className="w-4 h-4 text-[#165B62] shrink-0 mt-0.5" /> : <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />}
